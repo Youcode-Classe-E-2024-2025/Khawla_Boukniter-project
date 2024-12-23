@@ -12,8 +12,11 @@
                 </div>
             </div>
             <div class="col-lg-6 d-none d-lg-block">
-                <img src="<?= asset_url('img/hero-illustration.svg') ?>" alt="Illustration" class="img-fluid">
+                <img src="<?= asset_url('img/DALL·E 2025-01-05 00.25.30 - An image that clearly represents the theme of project management with black and pink tones. It features a workspace with a large digital screen displa.webp') ?>" alt="Illustration" class="img-fluid">
             </div>
+            <!-- <div class="hero-image">
+                <img src="<?= asset_url('img/your-image.jpg') ?>" alt="Hero Image" class="img-fluid">
+            </div> -->
         </div>
     </div>
 </section>

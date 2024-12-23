@@ -5,7 +5,7 @@
                 <h4 class="mb-0">Connexion</h4>
             </div>
             <div class="card-body">
-                <form action="/login" method="POST">
+                <form action="<?= base_url('login') ?>" method="POST">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" required>

@@ -5,7 +5,7 @@
                 <h4 class="mb-0">Inscription</h4>
             </div>
             <div class="card-body">
-                <form action="/register" method="POST">
+                <form action="<?= base_url('register') ?>" method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nom</label>
                         <input type="text" class="form-control" id="name" name="name" required>
