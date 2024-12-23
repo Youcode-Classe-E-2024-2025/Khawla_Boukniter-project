@@ -117,7 +117,7 @@
     </div>
 
     <?php if (!is_authenticated()): ?>
-    <footer class="bg-light mt-5 py-4">
+    <!-- <footer class="bg-light mt-5 py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -143,7 +143,7 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> -->
     <?php endif; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
