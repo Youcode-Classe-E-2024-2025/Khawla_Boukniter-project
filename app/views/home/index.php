@@ -1,4 +1,3 @@
-<?php require_once VIEW_PATH . '/layouts/header.php'; ?>
 
 <!-- Hero Section -->
 <section class="hero">
@@ -63,7 +62,7 @@
             <div class="col-md-4">
                 <div class="card project-card h-100">
                     <div class="card-body">
-                        <h5 class="card-title"><?= escape_html($project['title']) ?></h5>
+                        <h5 class="card-title gradient-text fw-bold"><?= escape_html($project['title']) ?></h5>
                         <p class="card-text"><?= escape_html($project['description']) ?></p>
                         <div class="project-meta">
                             <span><i class="bi bi-calendar"></i> <?= format_date($project['created_at']) ?></span>
@@ -78,7 +77,7 @@
 </section>
 
 <!-- Stats Section -->
-<section class="stats">
+<!-- <section class="stats">
     <div class="container">
         <div class="row g-4">
             <div class="col-md-4">
@@ -101,7 +100,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- CTA Section -->
 <section class="cta">

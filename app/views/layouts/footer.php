@@ -3,7 +3,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <h5 class="mb-3">ProjetManager</h5>
-                    <p class="text-muted">Une solution simple et puissante pour la gestion de projets en équipe.</p>
+                    <p>Une solution simple et puissante pour la gestion de projets en équipe.</p>
                 </div>
                 <div class="col-md-4">
                     <h5 class="mb-3">Liens rapides</h5>
@@ -30,22 +30,22 @@
             <hr>
             <div class="row">
                 <div class="col-md-6">
-                    <p class="text-muted mb-0">&copy; <?= date('Y') ?> ProjetManager. Tous droits réservés.</p>
+                    <p>&copy; <?= date('Y') ?> ProjetManager. Tous droits réservés.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <ul class="list-inline mb-0">
+                    <ul class="list-inline mb-0" style="text-align: center;">
                         <li class="list-inline-item">
-                            <a href="#" class="text-muted text-decoration-none">
+                            <a href="#" class="text-decoration-none">
                                 <i class="bi bi-facebook"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="text-muted text-decoration-none">
+                            <a href="#" class="text-decoration-none">
                                 <i class="bi bi-twitter"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="text-muted text-decoration-none">
+                            <a href="#" class="text-decoration-none">
                                 <i class="bi bi-linkedin"></i>
                             </a>
                         </li>

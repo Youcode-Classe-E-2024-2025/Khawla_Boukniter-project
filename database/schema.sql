@@ -1,6 +1,6 @@
 -- Création de la base de données
-CREATE DATABASE IF NOT EXISTS task_manager;
-USE task_manager;
+CREATE DATABASE IF NOT EXISTS projet_manager;
+USE projet_manager;
 
 -- Table des utilisateurs
 CREATE TABLE IF NOT EXISTS users (

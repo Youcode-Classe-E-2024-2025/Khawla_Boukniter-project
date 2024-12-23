@@ -17,32 +17,46 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="<?= base_url() ?>">
                 <i class="bi bi-kanban me-2"></i>
-                ProjetManager
+                Gestionnaire de Projets
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url() ?>">Accueil</a>
-                    </li>
                     <?php if (is_authenticated()): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('dashboard') ?>">Tableau de bord</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('projects') ?>">Projets</a>
-                        </li>
                         <?php if (is_manager()): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('categories') ?>">Catégories</a>
+                                <a class="nav-link" href="<?= base_url('projects') ?>">
+                                    <i class="bi bi-folder me-1"></i>
+                                    Mes Projets
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= base_url('tasks') ?>">
+                                    <i class="bi bi-list-check me-1"></i>
+                                    Mes Tâches
+                                </a>
                             </li>
                         <?php endif; ?>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">
+                                <i class="bi bi-stars me-1"></i>
+                                Fonctionnalités
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#projects">
+                                <i class="bi bi-collection me-1"></i>
+                                Projets Publics
+                            </a>
+                        </li>
                     <?php endif; ?>
                 </ul>
                 <ul class="navbar-nav">
@@ -50,24 +64,36 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle me-1"></i>
-                                <?= escape_html(user_name()) ?>
+                                <?= htmlspecialchars(user_name()) ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="<?= base_url('profile') ?>">
-                                    <i class="bi bi-person me-2"></i>Profil
-                                </a></li>
+                                <li>
+                                    <a class="dropdown-item" href="<?= base_url('profile') ?>">
+                                        <i class="bi bi-person me-2"></i>
+                                        Mon Profil
+                                    </a>
+                                </li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?= base_url('logout') ?>">
-                                    <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
-                                </a></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="<?= base_url('logout') ?>">
+                                        <i class="bi bi-box-arrow-right me-2"></i>
+                                        Déconnexion
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('login') ?>">Connexion</a>
+                            <a class="nav-link" href="<?= base_url('login') ?>">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>
+                                Connexion
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white ms-2" href="<?= base_url('register') ?>">Inscription</a>
+                            <a class="btn btn-primary ms-2" href="<?= base_url('register') ?>">
+                                <i class="bi bi-person-plus me-1"></i>
+                                S'inscrire
+                            </a>
                         </li>
                     <?php endif; ?>
                 </ul>

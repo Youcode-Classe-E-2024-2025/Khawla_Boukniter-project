@@ -1,16 +1,11 @@
-/* Variables globales */
+/* Variables de couleur */
 :root {
-    --primary-color: #0d6efd;
-    --secondary-color: #6c757d;
-    --success-color: #198754;
-    --info-color: #0dcaf0;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
-    --light-color: #f8f9fa;
-    --dark-color: #212529;
+    --primary-color: #121212; /* Couleur de fond sombre */
+    --accent-color: #ff4081; /* Couleur d'accent vif */
+    --text-color: #ffffff; /* Couleur du texte */
 }
 
-/* Reset et base */
+/* Réinitialisation et styles de base */
 * {
     margin: 0;
     padding: 0;
@@ -18,172 +13,86 @@
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     line-height: 1.6;
-    color: var(--dark-color);
-    background-color: #f5f8fa;
 }
 
 /* Navigation */
 .navbar {
-    box-shadow: 0 2px 4px rgba(0,0,0,.1);
-    background-color: white !important;
-    padding: 1rem 0;
+    background-color: #1e1e1e; /* Couleur de fond de la barre de navigation */
+    padding: 1rem;
 }
 
 .navbar-brand {
-    font-weight: 600;
-    font-size: 1.5rem;
-    color: var(--primary-color) !important;
+    color: var(--accent-color);
+    font-size: 1.8rem;
 }
 
 .nav-link {
-    font-weight: 500;
-    padding: 0.5rem 1rem !important;
-    transition: color 0.3s ease;
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
 }
 
-.nav-link:hover {
-    color: var(--primary-color) !important;
+/* Section Héro */
+.hero {
+    background: url('path/to/your/image.jpg') no-repeat center center/cover;
+    color: var(--text-color);
+    padding: 8rem 0;
+    text-align: center;
 }
 
-/* Cards */
+/* Cartes */
 .card {
+    background-color: #1e1e1e; /* Couleur de fond des cartes */
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: var(--text-color);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 25px rgba(0,0,0,.1);
-}
-
-.card-header {
-    background-color: white;
-    border-bottom: 1px solid rgba(0,0,0,.1);
-    padding: 1.25rem;
-}
-
-.card-body {
-    padding: 1.5rem;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
 }
 
 /* Boutons */
 .btn {
-    padding: 0.5rem 1.5rem;
-    font-weight: 500;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.btn-primary:hover {
-    background-color: #0b5ed7;
-    border-color: #0a58ca;
-    transform: translateY(-2px);
-}
-
-/* Formulaires */
-.form-control {
-    padding: 0.75rem 1rem;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
-}
-
-.form-label {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-/* Tableaux */
-.table {
-    background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.table thead th {
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #dee2e6;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.875rem;
-    letter-spacing: 0.5px;
-}
-
-.table tbody tr {
-    transition: background-color 0.3s ease;
-}
-
-.table tbody tr:hover {
-    background-color: #f8f9fa;
-}
-
-/* Badges */
-.badge {
-    padding: 0.5em 1em;
-    font-weight: 500;
-    border-radius: 30px;
-}
-
-/* Alertes */
-.alert {
+    background-color: var(--accent-color);
+    color: var(--text-color);
     border: none;
-    border-radius: 10px;
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    transition: background-color 0.3s;
 }
 
-.alert-dismissible .btn-close {
-    padding: 1.25rem;
+.btn:hover {
+    background-color: #ff79b0; /* Couleur au survol */
 }
 
 /* Footer */
-footer {
-    background-color: white;
-    border-top: 1px solid #dee2e6;
+.footer {
+    background-color: var(--primary-color); /* Couleur de fond sombre */
+    color: var(--text-color); /* Couleur du texte blanche */
     padding: 3rem 0;
-    margin-top: 5rem;
+    text-align: center;
 }
 
-/* Utilitaires */
-.shadow-sm {
-    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+.footer a {
+    color: var(--accent-color); /* Couleur des liens dans le footer */
 }
 
-.shadow {
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+.footer a:hover {
+    color: #ff79b0; /* Couleur au survol des liens */
 }
 
-.shadow-lg {
-    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease forwards;
+.footer h5 {
+    background: linear-gradient(to right, #ff4081, #4CAF50); /* Dégradé avec les couleurs du site */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Remplissage transparent pour le dégradé */
+    font-weight: bold; /* Texte en gras */
 }
 
 /* Responsive */
@@ -195,10 +104,6 @@ footer {
     .card {
         margin-bottom: 1rem;
     }
-    
-    .table-responsive {
-        border-radius: 10px;
-    }
 }
 
 /* Dark mode */
@@ -208,16 +113,8 @@ footer {
         color: #f8f9fa;
     }
     
-    .card, .navbar, .table, footer {
+    .card, .navbar, .footer {
         background-color: #2d2d2d !important;
-    }
-    
-    .table thead th {
-        background-color: #343434;
-    }
-    
-    .table tbody tr:hover {
-        background-color: #343434;
     }
     
     .form-control {
@@ -230,4 +127,9 @@ footer {
         background-color: #2d2d2d;
         color: #f8f9fa;
     }
+}
+
+/* Autres styles pour assurer la visibilité */
+h1, h2, h3, h4, h6 {
+    color: var(--text-color); /* Couleur des titres */
 }
