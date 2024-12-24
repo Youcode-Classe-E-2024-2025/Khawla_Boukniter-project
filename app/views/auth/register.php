@@ -21,7 +21,7 @@
                     <button type="submit" class="btn btn-primary">S'inscrire</button>
                 </form>
                 <div class="mt-3">
-                    <p>Déjà un compte ? <a href="/login">Se connecter</a></p>
+                    <p>Déjà un compte ? <a href="<?= base_url('login') ?>">Se connecter</a></p>
                 </div>
             </div>
         </div>

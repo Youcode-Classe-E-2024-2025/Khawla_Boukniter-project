@@ -59,6 +59,37 @@ class TaskController extends Controller {
         ]);
     }
 
+    // public function create() {
+    //     if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+    //         $_SESSION['error'] = "Vous devez être un chef de projet pour créer une tâche.";
+    //         $this->redirect('dashboard');
+    //         return;
+    //     }
+
+    //     if ($this->isPost()) {
+    //         $data = $this->getPostData();
+    //         $data['creator_id'] = $_SESSION['user_id']; // ID du créateur
+    //         $data['project_id'] = $data['project_id']; // ID du projet associé
+
+    //         // Validation des champs requis
+    //         if (empty($data['title']) || empty($data['deadline'])) {
+    //             $_SESSION['error'] = "Le titre et la date limite sont requis.";
+    //             $this->redirect("tasks/create");
+    //             return;
+    //         }
+
+    //         if ($this->taskModel->create($data)) {
+    //             $_SESSION['success'] = "Tâche créée avec succès.";
+    //             $this->redirect("projects/{$data['project_id']}/tasks");
+    //         } else {
+    //             $_SESSION['error'] = "Erreur lors de la création de la tâche.";
+    //             $this->redirect("tasks/create");
+    //         }
+    //     }
+
+    //     $this->render('tasks/create', ['pageTitle' => 'Créer une Tâche']);
+    // }
+
     public function create(int $projectId) {
         if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
             $this->redirect('/projects');
@@ -222,5 +253,34 @@ class TaskController extends Controller {
         }
 
         $this->redirect("/projects/$projectId/tasks");
+    }
+
+    public function validateTask($taskId) {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+            $_SESSION['error'] = "Vous devez être un chef de projet pour valider une tâche.";
+            $this->redirect('dashboard');
+            return;
+        }
+
+        if ($this->taskModel->update($taskId, ['status' => 'validated'])) {
+            $_SESSION['success'] = "Tâche validée avec succès.";
+        } else {
+            $_SESSION['error'] = "Erreur lors de la validation de la tâche.";
+        }
+
+        $this->redirect("tasks/view/$taskId");
+    }
+
+    public function viewAssignedTasks() {
+        if (!$this->isAuthenticated()) {
+            $_SESSION['error'] = "Vous devez être connecté pour voir vos tâches.";
+            $this->redirect('login');
+            return;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $tasks = $this->taskModel->getByAssignee($userId); // Méthode à implémenter dans le modèle
+
+        $this->render('tasks/assigned', ['tasks' => $tasks, 'pageTitle' => 'Mes Tâches']);
     }
 }

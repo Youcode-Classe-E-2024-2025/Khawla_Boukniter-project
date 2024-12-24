@@ -24,7 +24,7 @@ class ProjectController extends Controller {
         $userRole = $_SESSION['user_role'] ?? '';
         $userId = $_SESSION['user_id'] ?? 0;
         
-        if ($userRole === 'project_manager') {
+        if ($userRole === 'manager') {
             $projects = $this->projectModel->getByManager($userId);
         } else {
             $projects = $this->projectModel->getByMember($userId);
@@ -38,15 +38,27 @@ class ProjectController extends Controller {
     }
 
     public function create() {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
-            $this->redirect('/projects');
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
+            $_SESSION['error'] = "Vous devez être un chef de projet pour créer un projet.";
+            $this->redirect('dashboard');
+            return;
         }
 
-        $this->render('projects/create');
+        if ($this->isPost()) {
+            $data = $this->getPostData();
+            $data['manager_id'] = $_SESSION['user_id'];
+            $data['is_public'] = isset($data['is_public']) ? true : false;
+
+            $this->projectModel->create($data);
+            $_SESSION['success'] = "Projet créé avec succès.";
+            $this->redirect('dashboard');
+        }
+
+        $this->render('projects/create', ['pageTitle' => 'Créer un Projet']);
     }
 
     public function store() {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager' || !$this->isPost()) {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager' || !$this->isPost()) {
             $this->redirect('/projects');
         }
 
@@ -81,7 +93,7 @@ class ProjectController extends Controller {
 
         $members = $this->projectModel->getMembers($id);
         $canEdit = $this->isAuthenticated() && 
-                   $_SESSION['user_role'] === 'project_manager' && 
+                   $_SESSION['user_role'] === 'manager' && 
                    $project['manager_id'] === ($_SESSION['user_id'] ?? 0);
 
         $this->render('projects/show', [
@@ -92,7 +104,7 @@ class ProjectController extends Controller {
     }
 
     public function edit(int $id) {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $this->redirect('/projects');
         }
 
@@ -106,7 +118,7 @@ class ProjectController extends Controller {
 
     public function update(int $id) {
         if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'project_manager' || 
+            $_SESSION['user_role'] !== 'manager' || 
             !$this->isPost()) {
             $this->redirect('/projects');
         }
@@ -135,7 +147,7 @@ class ProjectController extends Controller {
 
     public function delete(int $id) {
         if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'project_manager' || 
+            $_SESSION['user_role'] !== 'manager' || 
             !$this->isPost()) {
             $this->redirect('/projects');
         }
@@ -154,38 +166,35 @@ class ProjectController extends Controller {
         $this->redirect('/projects');
     }
 
-    public function inviteMember(int $id) {
-        if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'project_manager' || 
-            !$this->isPost()) {
-            $this->redirect('/projects');
+    public function inviteMember($projectId) {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
+            $_SESSION['error'] = "Vous devez être un chef de projet pour inviter des membres.";
+            $this->redirect('dashboard');
+            return;
         }
 
-        $project = $this->projectModel->findById($id);
-        if (!$project || $project['manager_id'] !== ($_SESSION['user_id'] ?? 0)) {
-            $this->redirect('/projects');
+        if ($this->isPost()) {
+            $data = $this->getPostData();
+            $email = $data['email'] ?? '';
+
+            // Logique pour inviter le membre
+            if ($this->userModel->findByEmail($email)) {
+                // Logique pour ajouter le membre au projet
+                $this->projectModel->addMember($projectId, $email);
+                $_SESSION['success'] = "Invitation envoyée à $email.";
+            } else {
+                $_SESSION['error'] = "L'email fourni n'est pas associé à un compte.";
+            }
+
+            $this->redirect("projects/$projectId");
         }
 
-        $data = $this->getPostData();
-        $user = $this->userModel->findByEmail($data['email']);
-
-        if (!$user || $user['role'] !== 'member') {
-            $_SESSION['error'] = "Utilisateur non trouvé ou n'est pas un membre";
-            $this->redirect('/projects/' . $id);
-        }
-
-        if ($this->projectModel->addMember($id, $user['id'])) {
-            $_SESSION['success'] = "Invitation envoyée avec succès";
-        } else {
-            $_SESSION['error'] = "Erreur lors de l'envoi de l'invitation";
-        }
-
-        $this->redirect('/projects/' . $id);
+        $this->render('projects/invite', ['projectId' => $projectId, 'pageTitle' => 'Inviter un Membre']);
     }
 
     public function removeMember(int $id, int $userId) {
         if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'project_manager' || 
+            $_SESSION['user_role'] !== 'manager' || 
             !$this->isPost()) {
             $this->redirect('/projects');
         }

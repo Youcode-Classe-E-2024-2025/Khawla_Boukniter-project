@@ -35,6 +35,14 @@ class User {
         ]);
     }
 
+    public function updateRole($userId, $role) {
+        $query = "UPDATE users SET role = :role WHERE id = :userId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':role', $role);
+        $stmt->bindParam(':userId', $userId);
+        return $stmt->execute();
+    }
+
     public function findByEmail(string $email): ?array {
         $sql = "SELECT * FROM users WHERE email = :email";
         $stmt = $this->db->prepare($sql);

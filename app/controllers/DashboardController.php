@@ -28,7 +28,7 @@ class DashboardController extends Controller {
             $tasks = $this->taskModel->getByProjects(array_column($projects, 'id'));
         } else {
             $projects = $this->projectModel->getByMember($userId);
-            $tasks = $this->taskModel->getByAssignee($userId);
+            $tasks = $this->taskModel->getByMember($userId);
         }
 
         // Statistiques pour les projets

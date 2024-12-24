@@ -135,4 +135,24 @@ class Task {
         
         return $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
     }
+
+    public function getByProjects(array $projectIds) {
+        if (empty($projectIds)) {
+            return []; // Retourner un tableau vide si aucun ID de projet n'est fourni
+        }
+    
+        $placeholders = rtrim(str_repeat('?,', count($projectIds)), ','); // Créer des placeholders pour la requête
+        $query = "SELECT * FROM tasks WHERE project_id IN ($placeholders)";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute($projectIds); // Passer les IDs de projet directement
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getByAssignee($userId) {
+        $query = "SELECT * FROM tasks WHERE assigned_to = :userId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

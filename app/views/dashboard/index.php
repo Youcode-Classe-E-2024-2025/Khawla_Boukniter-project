@@ -19,7 +19,7 @@ $isManager = $userRole === 'manager';
         <div class="col-md-6 col-lg-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Total Projets</h6>
+                    <h6 class="card-subtitle mb-2">Total Projets</h6>
                     <h2 class="card-title mb-0"><?= $projectStats['total'] ?></h2>
                 </div>
             </div>
@@ -27,7 +27,7 @@ $isManager = $userRole === 'manager';
         <div class="col-md-6 col-lg-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Projets Actifs</h6>
+                    <h6 class="card-subtitle mb-2">Projets Actifs</h6>
                     <h2 class="card-title mb-0"><?= $projectStats['active'] ?></h2>
                 </div>
             </div>
@@ -35,15 +35,16 @@ $isManager = $userRole === 'manager';
         <div class="col-md-6 col-lg-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Tâches En Cours</h6>
+                    <h6 class="card-subtitle mb-2">Tâches En Cours</h6>
                     <h2 class="card-title mb-0"><?= $taskStats['in_progress'] ?></h2>
                 </div>
             </div>
         </div>
+        
         <div class="col-md-6 col-lg-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Tâches Terminées</h6>
+                    <h6 class="card-subtitle mb-2">Tâches Terminées</h6>
                     <h2 class="card-title mb-0"><?= $taskStats['completed'] ?></h2>
                 </div>
             </div>
