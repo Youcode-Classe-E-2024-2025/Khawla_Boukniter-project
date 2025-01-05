@@ -17,9 +17,9 @@
                     <button type="submit" class="btn btn-primary">Se connecter</button>
                 </form>
                 <div class="mt-3">
-                    <p>Pas encore de compte ? <a href="/register">S'inscrire</a></p>
+                    <p>Pas encore de compte ? <a href="<?= base_url('register') ?>">S'inscrire</a></p>
                 </div>
             </div>
-        </div>
+        </div>  
     </div>
 </div>
