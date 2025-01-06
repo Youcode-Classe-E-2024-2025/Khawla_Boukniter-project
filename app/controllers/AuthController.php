@@ -38,7 +38,7 @@ class AuthController extends Controller
                 $_SESSION['user_role'] = $user['role']; // Stocker le rôle
 
                 if ($user['role'] === null) {
-                    $this->redirect('choose-role');
+                    $this->redirect('choose_role');
                 } else {
                     $this->redirect('dashboard');
                 }

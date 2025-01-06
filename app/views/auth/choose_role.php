@@ -9,7 +9,7 @@
                     <strong>Important :</strong> Ce choix est définitif et déterminera votre rôle dans l'application.
                 </div>
 
-                <form action="/choose-role" method="POST">
+                <form action="/choose_role" method="POST">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card mb-3">

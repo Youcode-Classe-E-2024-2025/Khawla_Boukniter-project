@@ -1,15 +1,18 @@
 <?php
 
-function url($path = '') {
-    $base_url = '/proj/public';
+function url($path = '')
+{
+    $base_url = '/Khawla_Boukniter-project/public';
     return $base_url . ($path ? '/' . ltrim($path, '/') : '');
 }
 
-function redirect($path) {
+function redirect($path)
+{
     header('Location: ' . url($path));
     exit();
 }
 
-function asset($path) {
+function asset($path)
+{
     return url($path);
 }

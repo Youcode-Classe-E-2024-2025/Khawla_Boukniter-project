@@ -40,6 +40,7 @@ $router->addRoute('GET', '/dashboard', [DashboardController::class, 'index']);
 // Routes pour les projets
 $router->addRoute('GET', '/projects', [ProjectController::class, 'index']);
 $router->addRoute('GET', '/projects/create', [ProjectController::class, 'create']);
+$router->addRoute('POST', '/projects/create', [ProjectController::class, 'create']);
 $router->addRoute('POST', '/projects', [ProjectController::class, 'store']);
 $router->addRoute('GET', '/projects/{id}', [ProjectController::class, 'show']);
 $router->addRoute('GET', '/projects/{id}/edit', [ProjectController::class, 'edit']);
@@ -66,7 +67,7 @@ $router->addRoute('POST', '/categories/{id}/delete', [CategoryController::class,
 
 // Dispatch de la requête
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = str_replace('/proj/public', '', $uri);
+$uri = str_replace('/Khawla_Boukniter-project/public', '', $uri);
 if (empty($uri)) {
     $uri = '/';
 }

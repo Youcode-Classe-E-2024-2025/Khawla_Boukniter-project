@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2><?= $isPublic ? 'Projets Publics' : 'Mes Projets' ?></h2>
             <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'manager'): ?>
-                <a href="/projects/create" class="btn btn-primary">Nouveau Projet</a>
+                <a href="<?= base_url('projects/create') ?>" class="btn btn-primary">Nouveau Projet</a>
             <?php endif; ?>
         </div>
 
@@ -34,7 +34,7 @@
                                 </p>
                             </div>
                             <div class="card-footer bg-transparent">
-                                <a href="/projects/<?= $project['id'] ?>" class="btn btn-primary btn-sm">
+                                <a href="<?= base_url('projects/') ?><?= $project['id'] ?>" class="btn btn-primary btn-sm">
                                     Voir le projet
                                 </a>
                                 <?php if (

@@ -33,8 +33,14 @@ class Router {
                 if (!method_exists($controllerInstance, $action)) {
                     throw new \Exception("Action not found in controller: $action");
                 }
-                
-                return $controllerInstance->$action();
+
+                if (preg_match('/^\/projects\/(\d+)$/', $uri, $matches)) {
+                    $id = (int)$matches[1];
+                    return $controllerInstance->$action($id);
+                }
+                else {
+                    return $controllerInstance->$action();
+                }
             }
         }
         

@@ -6,16 +6,19 @@ use App\Core\Controller;
 use App\Models\Project;
 use App\Models\User;
 
-class ProjectController extends Controller {
+class ProjectController extends Controller
+{
     private Project $projectModel;
     private User $userModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->projectModel = new Project();
         $this->userModel = new User();
     }
 
-    public function index() {
+    public function index()
+    {
         if (!$this->isAuthenticated()) {
             $projects = $this->projectModel->getPublicProjects();
             return $this->render('projects/index', ['projects' => $projects, 'isPublic' => true]);
@@ -23,7 +26,7 @@ class ProjectController extends Controller {
 
         $userRole = $_SESSION['user_role'] ?? '';
         $userId = $_SESSION['user_id'] ?? 0;
-        
+
         if ($userRole === 'manager') {
             $projects = $this->projectModel->getByManager($userId);
         } else {
@@ -37,7 +40,8 @@ class ProjectController extends Controller {
         ]);
     }
 
-    public function create() {
+    public function create()
+    {
         if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $_SESSION['error'] = "Vous devez être un chef de projet pour créer un projet.";
             $this->redirect('dashboard');
@@ -57,14 +61,15 @@ class ProjectController extends Controller {
         $this->render('projects/create', ['pageTitle' => 'Créer un Projet']);
     }
 
-    public function store() {
+    public function store()
+    {
         if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager' || !$this->isPost()) {
             $this->redirect('/projects');
         }
 
         $data = $this->getPostData();
         $data['manager_id'] = $_SESSION['user_id'] ?? 0;
-        
+
         // Validation basique
         if (empty($data['title']) || empty($data['deadline'])) {
             $_SESSION['error'] = "Le titre et la date limite sont requis";
@@ -81,7 +86,8 @@ class ProjectController extends Controller {
         }
     }
 
-    public function show(int $id) {
+    public function show(int $id)
+    {
         $project = $this->projectModel->findById($id);
         if (!$project) {
             $this->redirect('/projects');
@@ -92,9 +98,9 @@ class ProjectController extends Controller {
         }
 
         $members = $this->projectModel->getMembers($id);
-        $canEdit = $this->isAuthenticated() && 
-                   $_SESSION['user_role'] === 'manager' && 
-                   $project['manager_id'] === ($_SESSION['user_id'] ?? 0);
+        $canEdit = $this->isAuthenticated() &&
+            $_SESSION['user_role'] === 'manager' &&
+            $project['manager_id'] === ($_SESSION['user_id'] ?? 0);
 
         $this->render('projects/show', [
             'project' => $project,
@@ -103,7 +109,8 @@ class ProjectController extends Controller {
         ]);
     }
 
-    public function edit(int $id) {
+    public function edit(int $id)
+    {
         if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $this->redirect('/projects');
         }
@@ -116,10 +123,13 @@ class ProjectController extends Controller {
         $this->render('projects/edit', ['project' => $project]);
     }
 
-    public function update(int $id) {
-        if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'manager' || 
-            !$this->isPost()) {
+    public function update(int $id)
+    {
+        if (
+            !$this->isAuthenticated() ||
+            $_SESSION['user_role'] !== 'manager' ||
+            !$this->isPost()
+        ) {
             $this->redirect('/projects');
         }
 
@@ -145,10 +155,13 @@ class ProjectController extends Controller {
         }
     }
 
-    public function delete(int $id) {
-        if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'manager' || 
-            !$this->isPost()) {
+    public function delete(int $id)
+    {
+        if (
+            !$this->isAuthenticated() ||
+            $_SESSION['user_role'] !== 'manager' ||
+            !$this->isPost()
+        ) {
             $this->redirect('/projects');
         }
 
@@ -166,7 +179,8 @@ class ProjectController extends Controller {
         $this->redirect('/projects');
     }
 
-    public function inviteMember($projectId) {
+    public function inviteMember($projectId)
+    {
         if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $_SESSION['error'] = "Vous devez être un chef de projet pour inviter des membres.";
             $this->redirect('dashboard');
@@ -192,10 +206,13 @@ class ProjectController extends Controller {
         $this->render('projects/invite', ['projectId' => $projectId, 'pageTitle' => 'Inviter un Membre']);
     }
 
-    public function removeMember(int $id, int $userId) {
-        if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'manager' || 
-            !$this->isPost()) {
+    public function removeMember(int $id, int $userId)
+    {
+        if (
+            !$this->isAuthenticated() ||
+            $_SESSION['user_role'] !== 'manager' ||
+            !$this->isPost()
+        ) {
             $this->redirect('/projects');
         }
 
