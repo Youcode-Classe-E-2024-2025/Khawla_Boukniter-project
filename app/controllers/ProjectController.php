@@ -190,11 +190,13 @@ class ProjectController extends Controller
         if ($this->isPost()) {
             $data = $this->getPostData();
             $email = $data['email'] ?? '';
+            $user = $this->userModel->findByEmail($email);
 
             // Logique pour inviter le membre
-            if ($this->userModel->findByEmail($email)) {
+            if ($user) {
+                $userId = (int)$user['id'];
                 // Logique pour ajouter le membre au projet
-                $this->projectModel->addMember($projectId, $email);
+                $this->projectModel->addMember($projectId, userId: $userId);
                 $_SESSION['success'] = "Invitation envoyée à $email.";
             } else {
                 $_SESSION['error'] = "L'email fourni n'est pas associé à un compte.";

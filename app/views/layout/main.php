@@ -69,6 +69,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
+                                        <i class="bi bi-person me-2"></i>
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
