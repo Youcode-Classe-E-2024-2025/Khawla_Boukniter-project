@@ -30,6 +30,16 @@
             </div>
         </div>
 
+        <div class="card mb-4">
+            <!-- <button><a href="<?= base_url('projects/' . $projectId . '/tasks') ?>" class="btn btn-primary">Voir les tâches de ce projet</a></button> -->
+            <h2>Tâches Associées</h2>
+            <ul>
+                <?php foreach ($tasks as $task): ?>
+                    <li><?= htmlspecialchars($task['title']) ?> - <?= htmlspecialchars($task['description']) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
         <!-- Section des tâches sera ajoutée ici  -->
     </div>
 

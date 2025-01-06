@@ -86,3 +86,13 @@ INSERT INTO categories (name, color) VALUES
 ('Bug', '#ff0000'),
 ('Feature', '#00ff00'),
 ('Basic', '#0000ff');
+
+INSERT INTO tasks (name, description, project_id) VALUES 
+('Tâche 1', 'Description de la tâche 1', 1),
+('Tâche 2', 'Description de la tâche 2', 1),
+('Tâche 3', 'Description de la tâche 3', 1);
+
+ INSERT INTO tasks (title, description, status, priority, due_date, project_id) VALUES 
+ ('Tâche 1', 'Description de la tâche 1', 'todo', 'medium', '2025-01-10', 1),
+ ('Tâche 2', 'Description de la tâche 2', 'in_progress', 'high', '2025-01-15', 1),
+ ('Tâche 3', 'Description de la tâche 3', 'completed', 'low', '2025-01-20', 1);

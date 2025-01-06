@@ -5,16 +5,19 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Task; // Ajout de la classe Task
 
 class ProjectController extends Controller
 {
     private Project $projectModel;
     private User $userModel;
+    private Task $taskModel; // Ajout de la propriété taskModel
 
     public function __construct()
     {
         $this->projectModel = new Project();
         $this->userModel = new User();
+        $this->taskModel = new Task(); // Initialisation de la propriété taskModel
     }
 
     public function index()
@@ -102,10 +105,13 @@ class ProjectController extends Controller
             $_SESSION['user_role'] === 'manager' &&
             $project['manager_id'] === ($_SESSION['user_id'] ?? 0);
 
+        $tasks = $this->taskModel->getByProject($id);
+
         $this->render('projects/show', [
             'project' => $project,
             'members' => $members,
-            'canEdit' => $canEdit
+            'canEdit' => $canEdit,
+            'tasks' => $tasks
         ]);
     }
 
@@ -230,5 +236,10 @@ class ProjectController extends Controller
         }
 
         $this->redirect('/projects/' . $id);
+    }
+
+    public function showTasks(int $projectId) {
+        $tasks = $this->taskModel->getByProject($projectId);
+        $this->render('projects/tasks', ['tasks' => $tasks]);
     }
 }

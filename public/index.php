@@ -53,6 +53,7 @@ $router->addRoute('POST', '/projects/{id}/members/{userId}/remove', [ProjectCont
 
 // Routes pour les tâches
 $router->addRoute('GET', '/projects/{projectId}/tasks', [TaskController::class, 'index']);
+$router->addRoute('GET', '/projects/{projectId}/tasks', [TaskController::class,'showTasks']);
 $router->addRoute('GET', '/projects/{projectId}/tasks/create', [TaskController::class, 'create']);
 $router->addRoute('POST', '/projects/{projectId}/tasks', [TaskController::class, 'store']);
 $router->addRoute('GET', '/tasks/{id}', [TaskController::class, 'show']);
