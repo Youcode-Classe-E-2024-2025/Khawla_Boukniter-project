@@ -5,7 +5,7 @@
                 <h4 class="mb-0">Modifier le projet</h4>
             </div>
             <div class="card-body">
-                <form action="/projects/<?= $project['id'] ?>/edit" method="POST">
+                <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/edit" method="POST">
                     <div class="mb-3">
                         <label for="title" class="form-label">Titre du projet</label>
                         <input type="text" class="form-control" id="title" name="title"

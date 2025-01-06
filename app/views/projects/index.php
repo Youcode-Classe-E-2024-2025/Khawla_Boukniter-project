@@ -42,10 +42,10 @@
                                     $_SESSION['user_role'] === 'manager' &&
                                     $project['manager_id'] === $_SESSION['user_id']
                                 ): ?>
-                                    <a href="/projects/<?= $project['id'] ?>/edit" class="btn btn-secondary btn-sm">
+                                    <a href="<?= base_url('projects/') ?><?= $project['id'] ?>/edit" class="btn btn-secondary btn-sm">
                                         Modifier
                                     </a>
-                                    <form action="/projects/<?= $project['id'] ?>/delete" method="POST" class="d-inline">
+                                    <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/delete" method="POST" class="d-inline">
                                         <button type="submit" class="btn btn-danger btn-sm"
                                             onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
                                             Supprimer

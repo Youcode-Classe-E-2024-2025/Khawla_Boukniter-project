@@ -5,8 +5,8 @@
                 <h4 class="mb-0"><?= htmlspecialchars($project['title']) ?></h4>
                 <?php if ($canEdit): ?>
                     <div>
-                        <a href="/projects/<?= $project['id'] ?>/edit" class="btn btn-secondary btn-sm">Modifier</a>
-                        <form action="/projects/<?= $project['id'] ?>/delete" method="POST" class="d-inline">
+                        <a href="<?= base_url('projects/') ?><?= $project['id'] ?>/edit" class="btn btn-secondary btn-sm">Modifier</a>
+                        <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/delete" method="POST" class="d-inline">
                             <button type="submit" class="btn btn-danger btn-sm"
                                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
                                 Supprimer
@@ -40,9 +40,9 @@
             </div>
             <div class="card-body">
                 <?php if ($canEdit): ?>
-                    <form action="/projects/<?= $project['id'] ?>/invite" method="POST" class="mb-3">
+                    <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/invite" method="POST" class="mb-3">
                         <div class="input-group">
-                            <input type="email" class="form-control" name="email" placeholder="Email du membre" required>
+                            <input type="email" class="form-control" name="email" placeholder="Email du membre" required style="background-color: #f8f9fa;">
                             <button type="submit" class="btn btn-primary">Inviter</button>
                         </div>
                     </form>
@@ -59,7 +59,7 @@
                                     <span class="badge bg-warning">En attente</span>
                                 <?php endif; ?>
                                 <?php if ($canEdit && $member['status'] === 'accepted'): ?>
-                                    <form action="/projects/<?= $project['id'] ?>/members/<?= $member['id'] ?>/remove"
+                                    <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/members/<?= $member['id'] ?>/remove"
                                         method="POST" class="d-inline">
                                         <button type="submit" class="btn btn-danger btn-sm"
                                             onclick="return confirm('Retirer ce membre du projet ?')">
