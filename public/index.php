@@ -44,7 +44,7 @@ $router->addRoute('POST', '/projects/create', [ProjectController::class, 'create
 $router->addRoute('POST', '/projects', [ProjectController::class, 'store']);
 $router->addRoute('GET', '/projects/{id}', [ProjectController::class, 'show']);
 $router->addRoute('GET', '/projects/{id}/edit', [ProjectController::class, 'edit']);
-$router->addRoute('POST', '/projects/{id}', [ProjectController::class, 'update']);
+$router->addRoute('POST', '/projects/{id}/edit', [ProjectController::class, 'update']);
 $router->addRoute('POST', '/projects/{id}/delete', [ProjectController::class, 'delete']);
 $router->addRoute('POST', '/projects/{id}/members', [ProjectController::class, 'addMember']);
 $router->addRoute('POST', '/projects/{id}/members/{userId}/remove', [ProjectController::class, 'removeMember']);

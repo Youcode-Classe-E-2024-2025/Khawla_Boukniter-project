@@ -32,7 +32,7 @@
 
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                        <a href="/projects/<?= $project['id'] ?>" class="btn btn-secondary">Annuler</a>
+                        <a href="<?= base_url('projects/') ?><?= $project['id'] ?>" class="btn btn-secondary">Annuler</a>
                     </div>
                 </form>
             </div>

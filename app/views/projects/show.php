@@ -42,7 +42,7 @@
                 <?php if ($canEdit): ?>
                     <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/invite" method="POST" class="mb-3">
                         <div class="input-group">
-                            <input type="email" class="form-control" name="email" placeholder="Email du membre" required style="background-color: #f8f9fa;">
+                            <input type="email" class="form-control" name="email" placeholder="Email du membre" required style="background-color: #f8f9fa; color: black">
                             <button type="submit" class="btn btn-primary">Inviter</button>
                         </div>
                     </form>
