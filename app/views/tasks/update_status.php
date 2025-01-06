@@ -5,7 +5,7 @@
                 <h4 class="mb-0">Mettre à Jour le Statut de la Tâche</h4>
             </div>
             <div class="card-body">
-                <form action="<?= base_url("tasks/update-status/{$task['id']}") ?>" method="POST">
+                <form action="<?= base_url("tasks/update_status/{$task['id']}") ?>" method="POST">
                     <div class="mb-3">
                         <label for="status" class="form-label">Sélectionnez le Statut</label>
                         <select class="form-control" id="status" name="status" required>

@@ -85,4 +85,4 @@ INSERT INTO projects (title, description, deadline, is_public, manager_id) VALUE
 INSERT INTO categories (name, color) VALUES
 ('Bug', '#ff0000'),
 ('Feature', '#00ff00'),
-('Documentation', '#0000ff');
+('Basic', '#0000ff');

@@ -1,4 +1,3 @@
-
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
@@ -14,9 +13,7 @@
             <div class="col-lg-6 d-none d-lg-block">
                 <img src="<?= asset_url('img/DALL·E 2025-01-05 00.25.30 - An image that clearly represents the theme of project management with black and pink tones. It features a workspace with a large digital screen displa.webp') ?>" alt="Illustration" class="img-fluid">
             </div>
-            <!-- <div class="hero-image">
-                <img src="<?= asset_url('img/your-image.jpg') ?>" alt="Hero Image" class="img-fluid">
-            </div> -->
+
         </div>
     </div>
 </section>
@@ -57,23 +54,23 @@
 </section>
 
 <!-- Projects Section -->
-<section class="projects">
+<section class="projects" id="projects">
     <div class="container">
         <h2 class="text-center mb-5">Projets Publics Récents</h2>
         <div class="row g-4">
             <?php foreach ($projects as $project): ?>
-            <div class="col-md-4">
-                <div class="card project-card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title gradient-text fw-bold"><?= escape_html($project['title']) ?></h5>
-                        <p class="card-text"><?= escape_html($project['description']) ?></p>
-                        <div class="project-meta">
-                            <span><i class="bi bi-calendar"></i> <?= format_date($project['created_at']) ?></span>
-                            <span><i class="bi bi-person"></i> <?= escape_html($project['manager_name']) ?></span>
+                <div class="col-md-4">
+                    <div class="card project-card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title gradient-text fw-bold"><?= escape_html($project['title']) ?></h5>
+                            <p class="card-text"><?= escape_html($project['description']) ?></p>
+                            <div class="project-meta">
+                                <span><i class="bi bi-calendar"></i> <?= format_date($project['created_at']) ?></span>
+                                <span><i class="bi bi-person"></i> <?= escape_html($project['manager_name']) ?></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <?php endforeach; ?>
         </div>
     </div>

@@ -7,18 +7,21 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Category;
 
-class TaskController extends Controller {
+class TaskController extends Controller
+{
     private Task $taskModel;
     private Project $projectModel;
     private Category $categoryModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->taskModel = new Task();
         $this->projectModel = new Project();
         $this->categoryModel = new Category();
     }
 
-    public function index() {
+    public function index()
+    {
         if (!$this->isAuthenticated()) {
             $this->redirect('/login');
         }
@@ -31,7 +34,8 @@ class TaskController extends Controller {
         }
     }
 
-    public function projectTasks(int $projectId) {
+    public function projectTasks(int $projectId)
+    {
         if (!$this->isAuthenticated()) {
             $this->redirect('/login');
         }
@@ -41,8 +45,8 @@ class TaskController extends Controller {
             $this->redirect('/projects');
         }
 
-        $isManager = $_SESSION['user_role'] === 'project_manager' && 
-                    $project['manager_id'] === $_SESSION['user_id'];
+        $isManager = $_SESSION['user_role'] === 'manager' &&
+            $project['manager_id'] === $_SESSION['user_id'];
 
         $tasks = $this->taskModel->getByProject($projectId);
         $categories = $this->categoryModel->getByProject($projectId);
@@ -60,7 +64,7 @@ class TaskController extends Controller {
     }
 
     // public function create() {
-    //     if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+    //     if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
     //         $_SESSION['error'] = "Vous devez être un chef de projet pour créer une tâche.";
     //         $this->redirect('dashboard');
     //         return;
@@ -90,8 +94,9 @@ class TaskController extends Controller {
     //     $this->render('tasks/create', ['pageTitle' => 'Créer une Tâche']);
     // }
 
-    public function create(int $projectId) {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+    public function create(int $projectId)
+    {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $this->redirect('/projects');
         }
 
@@ -110,10 +115,13 @@ class TaskController extends Controller {
         ]);
     }
 
-    public function store(int $projectId) {
-        if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'project_manager' || 
-            !$this->isPost()) {
+    public function store(int $projectId)
+    {
+        if (
+            !$this->isAuthenticated() ||
+            $_SESSION['user_role'] !== 'manager' ||
+            !$this->isPost()
+        ) {
             $this->redirect('/projects');
         }
 
@@ -140,8 +148,9 @@ class TaskController extends Controller {
         $this->redirect("/projects/$projectId/tasks");
     }
 
-    public function edit(int $projectId, int $taskId) {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+    public function edit(int $projectId, int $taskId)
+    {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $this->redirect('/projects');
         }
 
@@ -166,10 +175,13 @@ class TaskController extends Controller {
         ]);
     }
 
-    public function update(int $projectId, int $taskId) {
-        if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'project_manager' || 
-            !$this->isPost()) {
+    public function update(int $projectId, int $taskId)
+    {
+        if (
+            !$this->isAuthenticated() ||
+            $_SESSION['user_role'] !== 'manager' ||
+            !$this->isPost()
+        ) {
             $this->redirect('/projects');
         }
 
@@ -200,10 +212,13 @@ class TaskController extends Controller {
         $this->redirect("/projects/$projectId/tasks");
     }
 
-    public function delete(int $projectId, int $taskId) {
-        if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'project_manager' || 
-            !$this->isPost()) {
+    public function delete(int $projectId, int $taskId)
+    {
+        if (
+            !$this->isAuthenticated() ||
+            $_SESSION['user_role'] !== 'manager' ||
+            !$this->isPost()
+        ) {
             $this->redirect('/projects');
         }
 
@@ -221,7 +236,8 @@ class TaskController extends Controller {
         $this->redirect("/projects/$projectId/tasks");
     }
 
-    public function updateStatus(int $projectId, int $taskId) {
+    public function updateStatus(int $projectId, int $taskId)
+    {
         if (!$this->isAuthenticated() || !$this->isPost()) {
             $this->redirect('/projects');
         }
@@ -232,8 +248,8 @@ class TaskController extends Controller {
         }
 
         // Vérifier si l'utilisateur est le chef de projet ou le membre assigné
-        $isManager = $_SESSION['user_role'] === 'project_manager' && 
-                    $task['manager_id'] === $_SESSION['user_id'];
+        $isManager = $_SESSION['user_role'] === 'manager' &&
+            $task['manager_id'] === $_SESSION['user_id'];
         $isAssigned = $task['assigned_to'] === $_SESSION['user_id'];
 
         if (!$isManager && !$isAssigned) {
@@ -255,8 +271,9 @@ class TaskController extends Controller {
         $this->redirect("/projects/$projectId/tasks");
     }
 
-    public function validateTask($taskId) {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+    public function validateTask($taskId)
+    {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $_SESSION['error'] = "Vous devez être un chef de projet pour valider une tâche.";
             $this->redirect('dashboard');
             return;
@@ -271,7 +288,8 @@ class TaskController extends Controller {
         $this->redirect("tasks/view/$taskId");
     }
 
-    public function viewAssignedTasks() {
+    public function viewAssignedTasks()
+    {
         if (!$this->isAuthenticated()) {
             $_SESSION['error'] = "Vous devez être connecté pour voir vos tâches.";
             $this->redirect('login');
@@ -279,7 +297,7 @@ class TaskController extends Controller {
         }
 
         $userId = $_SESSION['user_id'];
-        $tasks = $this->taskModel->getByAssignee($userId); // Méthode à implémenter dans le modèle
+        $tasks = $this->taskModel->getByAssignee($userId);
 
         $this->render('tasks/assigned', ['tasks' => $tasks, 'pageTitle' => 'Mes Tâches']);
     }

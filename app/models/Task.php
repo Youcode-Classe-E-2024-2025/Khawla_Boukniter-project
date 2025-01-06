@@ -5,19 +5,22 @@ namespace App\Models;
 use App\Config\Database;
 use PDO;
 
-class Task {
+class Task
+{
     private PDO $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Database::getInstance()->getConnection();
     }
 
-    public function create(array $data): int {
+    public function create(array $data): int
+    {
         $sql = "INSERT INTO tasks (title, description, status, priority, deadline, tag, 
                                  project_id, category_id, assigned_to) 
                 VALUES (:title, :description, :status, :priority, :deadline, :tag,
                         :project_id, :category_id, :assigned_to)";
-        
+
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'title' => $data['title'],
@@ -34,7 +37,8 @@ class Task {
         return $this->db->lastInsertId();
     }
 
-    public function update(int $id, array $data): bool {
+    public function update(int $id, array $data): bool
+    {
         $sql = "UPDATE tasks 
                 SET title = :title,
                     description = :description,
@@ -45,7 +49,7 @@ class Task {
                     category_id = :category_id,
                     assigned_to = :assigned_to
                 WHERE id = :id AND project_id = :project_id";
-        
+
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             'id' => $id,
@@ -61,10 +65,11 @@ class Task {
         ]);
     }
 
-    public function updateStatus(int $id, string $status, int $projectId): bool {
+    public function updateStatus(int $id, string $status, int $projectId): bool
+    {
         $sql = "UPDATE tasks SET status = :status 
                 WHERE id = :id AND project_id = :project_id";
-        
+
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             'id' => $id,
@@ -73,7 +78,8 @@ class Task {
         ]);
     }
 
-    public function delete(int $id, int $projectId): bool {
+    public function delete(int $id, int $projectId): bool
+    {
         $sql = "DELETE FROM tasks WHERE id = :id AND project_id = :project_id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
@@ -82,73 +88,79 @@ class Task {
         ]);
     }
 
-    public function findById(int $id): ?array {
+    public function findById(int $id): ?array
+    {
         $sql = "SELECT t.*, c.name as category_name, u.name as assigned_to_name 
                 FROM tasks t 
                 LEFT JOIN categories c ON t.category_id = c.id 
                 LEFT JOIN users u ON t.assigned_to = u.id 
                 WHERE t.id = :id";
-        
+
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
-        
+
         $task = $stmt->fetch(PDO::FETCH_ASSOC);
         return $task ?: null;
     }
 
-    public function getByProject(int $projectId): array {
+    public function getByProject(int $projectId): array
+    {
         $sql = "SELECT t.*, c.name as category_name, u.name as assigned_to_name 
                 FROM tasks t 
                 LEFT JOIN categories c ON t.category_id = c.id 
                 LEFT JOIN users u ON t.assigned_to = u.id 
                 WHERE t.project_id = :project_id 
                 ORDER BY t.priority DESC, t.deadline ASC";
-        
+
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['project_id' => $projectId]);
-        
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getByMember(int $memberId): array {
+    public function getByMember(int $memberId): array
+    {
         $sql = "SELECT t.*, p.title as project_title, c.name as category_name 
                 FROM tasks t 
                 JOIN projects p ON t.project_id = p.id 
                 LEFT JOIN categories c ON t.category_id = c.id 
                 WHERE t.assigned_to = :member_id 
                 ORDER BY t.deadline ASC";
-        
+
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['member_id' => $memberId]);
-        
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTasksByStatus(int $projectId): array {
+    public function getTasksByStatus(int $projectId): array
+    {
         $sql = "SELECT status, COUNT(*) as count 
                 FROM tasks 
                 WHERE project_id = :project_id 
                 GROUP BY status";
-        
+
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['project_id' => $projectId]);
-        
+
         return $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
     }
 
-    public function getByProjects(array $projectIds) {
+    public function getByProjects(array $projectIds)
+    {
         if (empty($projectIds)) {
-            return []; // Retourner un tableau vide si aucun ID de projet n'est fourni
+            return [];
         }
-    
-        $placeholders = rtrim(str_repeat('?,', count($projectIds)), ','); // Créer des placeholders pour la requête
+
+        $placeholders = rtrim(str_repeat('?,', count($projectIds)), ',');
         $query = "SELECT * FROM tasks WHERE project_id IN ($placeholders)";
         $stmt = $this->db->prepare($query);
-        $stmt->execute($projectIds); // Passer les IDs de projet directement
+        $stmt->execute($projectIds);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getByAssignee($userId) {
+    public function getByAssignee($userId)
+    {
         $query = "SELECT * FROM tasks WHERE assigned_to = :userId";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':userId', $userId);

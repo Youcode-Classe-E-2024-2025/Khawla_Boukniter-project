@@ -40,7 +40,7 @@ $isManager = $userRole === 'manager';
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-6 col-lg-3">
             <div class="card h-100">
                 <div class="card-body">
@@ -78,7 +78,7 @@ $isManager = $userRole === 'manager';
         </div>
         <div class="card-body">
             <?php if (empty($upcomingTasks)): ?>
-                <p class="text-muted">Aucune tâche à venir pour les 7 prochains jours.</p>
+                <p class="">Aucune tâche à venir pour les 7 prochains jours.</p>
             <?php else: ?>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -114,49 +114,49 @@ $isManager = $userRole === 'manager';
 <!-- Scripts pour les graphiques -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Graphique des projets
-    new Chart(document.getElementById('projectChart'), {
-        type: 'pie',
-        data: {
-            labels: ['Actifs', 'Terminés'],
-            datasets: [{
-                data: [<?= $projectStats['active'] ?>, <?= $projectStats['completed'] ?>],
-                backgroundColor: ['#0d6efd', '#198754']
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
+    document.addEventListener('DOMContentLoaded', function() {
+        // Graphique des projets
+        new Chart(document.getElementById('projectChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Actifs', 'Terminés'],
+                datasets: [{
+                    data: [<?= $projectStats['active'] ?>, <?= $projectStats['completed'] ?>],
+                    backgroundColor: ['#0d6efd', '#198754']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
                 }
             }
-        }
-    });
+        });
 
-    // Graphique des tâches
-    new Chart(document.getElementById('taskChart'), {
-        type: 'pie',
-        data: {
-            labels: ['À faire', 'En cours', 'Terminées'],
-            datasets: [{
-                data: [
-                    <?= $taskStats['todo'] ?>,
-                    <?= $taskStats['in_progress'] ?>,
-                    <?= $taskStats['completed'] ?>
-                ],
-                backgroundColor: ['#ffc107', '#0dcaf0', '#198754']
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
+        // Graphique des tâches
+        new Chart(document.getElementById('taskChart'), {
+            type: 'pie',
+            data: {
+                labels: ['À faire', 'En cours', 'Terminées'],
+                datasets: [{
+                    data: [
+                        <?= $taskStats['todo'] ?>,
+                        <?= $taskStats['in_progress'] ?>,
+                        <?= $taskStats['completed'] ?>
+                    ],
+                    backgroundColor: ['#ffc107', '#0dcaf0', '#198754']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
                 }
             }
-        }
+        });
     });
-});
 </script>

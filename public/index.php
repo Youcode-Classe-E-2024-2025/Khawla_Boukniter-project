@@ -30,8 +30,8 @@ $router->addRoute('GET', '/login', [AuthController::class, 'loginForm']);
 $router->addRoute('POST', '/login', [AuthController::class, 'login']);
 $router->addRoute('GET', '/register', [AuthController::class, 'registerForm']);
 $router->addRoute('POST', '/register', [AuthController::class, 'register']);
-$router->addRoute('GET', '/choose-role', [AuthController::class, 'chooseRoleForm']);
-$router->addRoute('POST', '/choose-role', [AuthController::class, 'chooseRole']);
+$router->addRoute('GET', '/choose_role', [AuthController::class, 'chooseRoleForm']);
+$router->addRoute('POST', '/choose_role', [AuthController::class, 'chooseRole']);
 $router->addRoute('GET', '/logout', [AuthController::class, 'logout']);
 
 // Routes pour le tableau de bord

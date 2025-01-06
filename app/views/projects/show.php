@@ -7,8 +7,8 @@
                     <div>
                         <a href="/projects/<?= $project['id'] ?>/edit" class="btn btn-secondary btn-sm">Modifier</a>
                         <form action="/projects/<?= $project['id'] ?>/delete" method="POST" class="d-inline">
-                            <button type="submit" class="btn btn-danger btn-sm" 
-                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
                                 Supprimer
                             </button>
                         </form>
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <!-- Section des tâches sera ajoutée ici plus tard -->
+        <!-- Section des tâches sera ajoutée ici  -->
     </div>
 
     <div class="col-md-4">
@@ -49,7 +49,7 @@
                 <?php endif; ?>
 
                 <?php if (empty($members)): ?>
-                    <p class="text-muted">Aucun membre dans ce projet.</p>
+                    <p class="">Aucun membre dans ce projet.</p>
                 <?php else: ?>
                     <ul class="list-group">
                         <?php foreach ($members as $member): ?>
@@ -59,10 +59,10 @@
                                     <span class="badge bg-warning">En attente</span>
                                 <?php endif; ?>
                                 <?php if ($canEdit && $member['status'] === 'accepted'): ?>
-                                    <form action="/projects/<?= $project['id'] ?>/members/<?= $member['id'] ?>/remove" 
-                                          method="POST" class="d-inline">
+                                    <form action="/projects/<?= $project['id'] ?>/members/<?= $member['id'] ?>/remove"
+                                        method="POST" class="d-inline">
                                         <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Retirer ce membre du projet ?')">
+                                            onclick="return confirm('Retirer ce membre du projet ?')">
                                             Retirer
                                         </button>
                                     </form>

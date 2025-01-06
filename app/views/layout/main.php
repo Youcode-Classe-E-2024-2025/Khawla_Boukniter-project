@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link href="<?= asset_url('css/style.css') ?>" rel="stylesheet">
     <link href="<?= asset_url('css/home.css') ?>" rel="stylesheet">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -66,7 +68,9 @@
                                         Mon Profil
                                     </a>
                                 </li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li>
                                     <a class="dropdown-item text-danger" href="<?= base_url('logout') ?>">
                                         <i class="bi bi-box-arrow-right me-2"></i>
@@ -117,7 +121,7 @@
     </div>
 
     <?php if (!is_authenticated()): ?>
-    <!-- <footer class="bg-light mt-5 py-4">
+        <!-- <footer class="bg-light mt-5 py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -148,4 +152,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

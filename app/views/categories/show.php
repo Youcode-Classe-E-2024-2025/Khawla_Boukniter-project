@@ -3,20 +3,20 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2><?= htmlspecialchars($category['name']) ?></h2>
-                <p class="text-muted">
+                <p class="">
                     Projet: <?= htmlspecialchars($project['title']) ?>
                 </p>
             </div>
             <?php if ($isManager): ?>
                 <div>
-                    <a href="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>/edit" 
-                       class="btn btn-secondary">
+                    <a href="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>/edit"
+                        class="btn btn-secondary">
                         Modifier la catégorie
                     </a>
-                    <form action="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>/delete" 
-                          method="POST" class="d-inline">
+                    <form action="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>/delete"
+                        method="POST" class="d-inline">
                         <button type="submit" class="btn btn-danger"
-                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">
                             Supprimer
                         </button>
                     </form>
@@ -82,8 +82,8 @@
                                 <td><?= date('d/m/Y', strtotime($task['deadline'])) ?></td>
                                 <?php if ($isManager): ?>
                                     <td>
-                                        <a href="/projects/<?= $project['id'] ?>/tasks/<?= $task['id'] ?>/edit" 
-                                           class="btn btn-sm btn-outline-secondary">
+                                        <a href="/projects/<?= $project['id'] ?>/tasks/<?= $task['id'] ?>/edit"
+                                            class="btn btn-sm btn-outline-secondary">
                                             Modifier
                                         </a>
                                     </td>

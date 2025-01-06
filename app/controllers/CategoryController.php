@@ -6,16 +6,19 @@ use App\Core\Controller;
 use App\Models\Category;
 use App\Models\Project;
 
-class CategoryController extends Controller {
+class CategoryController extends Controller
+{
     private Category $categoryModel;
     private Project $projectModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->categoryModel = new Category();
         $this->projectModel = new Project();
     }
 
-    public function index(int $projectId) {
+    public function index(int $projectId)
+    {
         if (!$this->isAuthenticated()) {
             $this->redirect('/login');
         }
@@ -25,8 +28,8 @@ class CategoryController extends Controller {
             $this->redirect('/projects');
         }
 
-        $isManager = $_SESSION['user_role'] === 'project_manager' && 
-                    $project['manager_id'] === $_SESSION['user_id'];
+        $isManager = $_SESSION['user_role'] === 'manager' &&
+            $project['manager_id'] === $_SESSION['user_id'];
 
         $categories = $this->categoryModel->getByProject($projectId);
 
@@ -37,8 +40,9 @@ class CategoryController extends Controller {
         ]);
     }
 
-    public function create(int $projectId) {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+    public function create(int $projectId)
+    {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $this->redirect('/projects');
         }
 
@@ -49,14 +53,14 @@ class CategoryController extends Controller {
 
         if ($this->isPost()) {
             $data = $this->getPostData();
-            
+
             if (empty($data['name'])) {
                 $_SESSION['error'] = "Le nom de la catégorie est requis";
                 $this->redirect("/projects/$projectId/categories");
             }
 
             $data['project_id'] = $projectId;
-            
+
             if ($this->categoryModel->create($data)) {
                 $_SESSION['success'] = "Catégorie créée avec succès";
             } else {
@@ -69,8 +73,9 @@ class CategoryController extends Controller {
         $this->render('categories/create', ['project' => $project]);
     }
 
-    public function edit(int $projectId, int $categoryId) {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+    public function edit(int $projectId, int $categoryId)
+    {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $this->redirect('/projects');
         }
 
@@ -86,7 +91,7 @@ class CategoryController extends Controller {
 
         if ($this->isPost()) {
             $data = $this->getPostData();
-            
+
             if (empty($data['name'])) {
                 $_SESSION['error'] = "Le nom de la catégorie est requis";
                 $this->redirect("/projects/$projectId/categories/$categoryId/edit");
@@ -107,10 +112,13 @@ class CategoryController extends Controller {
         ]);
     }
 
-    public function delete(int $projectId, int $categoryId) {
-        if (!$this->isAuthenticated() || 
-            $_SESSION['user_role'] !== 'project_manager' || 
-            !$this->isPost()) {
+    public function delete(int $projectId, int $categoryId)
+    {
+        if (
+            !$this->isAuthenticated() ||
+            $_SESSION['user_role'] !== 'manager' ||
+            !$this->isPost()
+        ) {
             $this->redirect('/projects');
         }
 
@@ -133,7 +141,8 @@ class CategoryController extends Controller {
         $this->redirect("/projects/$projectId/categories");
     }
 
-    public function show(int $projectId, int $categoryId) {
+    public function show(int $projectId, int $categoryId)
+    {
         if (!$this->isAuthenticated()) {
             $this->redirect('/login');
         }
@@ -149,8 +158,8 @@ class CategoryController extends Controller {
         }
 
         $tasks = $this->categoryModel->getTasksByCategory($categoryId);
-        $isManager = $_SESSION['user_role'] === 'project_manager' && 
-                    $project['manager_id'] === $_SESSION['user_id'];
+        $isManager = $_SESSION['user_role'] === 'manager' &&
+            $project['manager_id'] === $_SESSION['user_id'];
 
         $this->render('categories/show', [
             'project' => $project,

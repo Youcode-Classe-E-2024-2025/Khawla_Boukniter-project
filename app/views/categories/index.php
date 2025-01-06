@@ -23,29 +23,29 @@
                                     <div>
                                         <h5 class="card-title"><?= htmlspecialchars($category['name']) ?></h5>
                                         <p class="card-text">
-                                            <small class="text-muted">
+                                            <small class="">
                                                 <?= $category['task_count'] ?> tâche(s)
                                             </small>
                                         </p>
                                     </div>
                                     <?php if ($isManager): ?>
                                         <div class="dropdown">
-                                            <button class="btn btn-sm btn-secondary dropdown-toggle" 
-                                                    type="button" data-bs-toggle="dropdown">
+                                            <button class="btn btn-sm btn-secondary dropdown-toggle"
+                                                type="button" data-bs-toggle="dropdown">
                                                 Actions
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" 
-                                                       href="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>/edit">
+                                                    <a class="dropdown-item"
+                                                        href="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>/edit">
                                                         Modifier
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <form action="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>/delete" 
-                                                          method="POST" class="d-inline">
+                                                    <form action="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>/delete"
+                                                        method="POST" class="d-inline">
                                                         <button type="submit" class="dropdown-item text-danger"
-                                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">
+                                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">
                                                             Supprimer
                                                         </button>
                                                     </form>
@@ -54,9 +54,9 @@
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                                
-                                <a href="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>" 
-                                   class="btn btn-outline-primary btn-sm mt-3">
+
+                                <a href="/projects/<?= $project['id'] ?>/categories/<?= $category['id'] ?>"
+                                    class="btn btn-outline-primary btn-sm mt-3">
                                     Voir les tâches
                                 </a>
                             </div>

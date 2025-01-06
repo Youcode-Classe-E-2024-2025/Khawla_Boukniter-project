@@ -5,21 +5,25 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\User;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     private User $userModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userModel = new User();
     }
 
-    public function loginForm() {
+    public function loginForm()
+    {
         $this->render('auth/login', ['pageTitle' => 'Connexion']);
     }
 
-    public function login() {
+    public function login()
+    {
         if ($this->isPost()) {
             $data = $this->getPostData();
-            
+
             if (empty($data['email']) || empty($data['password'])) {
                 $_SESSION['error'] = "Tous les champs sont obligatoires";
                 $this->redirect('login');
@@ -27,12 +31,12 @@ class AuthController extends Controller {
             }
 
             $user = $this->userModel->findByEmail($data['email']);
-            
+
             if ($user && password_verify($data['password'], $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_role'] = $user['role']; // Stocker le rôle
-                
+
                 if ($user['role'] === null) {
                     $this->redirect('choose-role');
                 } else {
@@ -45,14 +49,16 @@ class AuthController extends Controller {
         }
     }
 
-    public function registerForm() {
+    public function registerForm()
+    {
         $this->render('auth/register', ['pageTitle' => 'Inscription']);
     }
 
-    public function register() {
+    public function register()
+    {
         if ($this->isPost()) {
             $data = $this->getPostData();
-            
+
             if (empty($data['name']) || empty($data['email']) || empty($data['password'])) {
                 $_SESSION['error'] = "Tous les champs sont obligatoires";
                 $this->redirect('register');
@@ -66,7 +72,7 @@ class AuthController extends Controller {
             }
 
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-            
+
             if ($this->userModel->create($data)) {
                 $_SESSION['success'] = "Compte créé avec succès";
                 $this->redirect('login');
@@ -77,7 +83,8 @@ class AuthController extends Controller {
         }
     }
 
-    public function chooseRoleForm() {
+    public function chooseRoleForm()
+    {
         if (!isset($_SESSION['user_id'])) {
             $this->redirect('login');
             return;
@@ -85,7 +92,8 @@ class AuthController extends Controller {
         $this->render('auth/choose_role', ['pageTitle' => 'Choisir un Rôle']);
     }
 
-    public function chooseRole() {
+    public function chooseRole()
+    {
         if (!$this->isAuthenticated()) {
             $this->redirect('login');
             return;
@@ -95,22 +103,23 @@ class AuthController extends Controller {
             $data = $this->getPostData();
             $role = $data['role'] ?? null;
 
-            if ($role && in_array($role, ['project_manager', 'member'])) {
+            if ($role && in_array($role, ['manager', 'member'])) {
                 $this->userModel->setRole($_SESSION['user_id'], $role);
-                $_SESSION['user_role'] = $role; // Mettre à jour la session
+                $_SESSION['user_role'] = $role;
                 $_SESSION['success'] = "Rôle défini avec succès.";
                 $this->redirect('dashboard');
             } else {
                 $_SESSION['error'] = "Rôle invalide.";
-                $this->redirect('choose-role');
+                $this->redirect('choose_role');
             }
         }
 
         $this->render('auth/choose_role', ['pageTitle' => 'Choisir un Rôle']);
     }
 
-    public function manageRoles() {
-        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'project_manager') {
+    public function manageRoles()
+    {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $_SESSION['error'] = "Vous n'avez pas les permissions nécessaires.";
             $this->redirect('dashboard');
             return;
@@ -127,14 +136,15 @@ class AuthController extends Controller {
                 $_SESSION['error'] = "Erreur lors de la mise à jour du rôle.";
             }
 
-            $this->redirect('manage-roles');
+            $this->redirect('manage_roles');
         }
 
         // Afficher la vue de gestion des rôles
         $this->render('auth/manage_roles', ['pageTitle' => 'Gérer les Rôles']);
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_destroy();
         $this->redirect('');
     }
