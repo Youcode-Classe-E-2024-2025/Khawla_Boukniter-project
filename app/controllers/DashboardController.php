@@ -61,16 +61,27 @@ class DashboardController extends Controller {
             if (empty($task['due_date'])) return false;
             $dueDate = strtotime($task['due_date']);
             $diff = $dueDate - time();
-            return $diff > 0 && $diff <= 7 * 24 * 60 * 60; // 7 jours en secondes
+            return $diff > 0 && $diff <= 7 * 24 * 60 * 60;
         });
 
-        $this->render('dashboard/index', [
-            'pageTitle' => 'Tableau de bord',
-            'projects' => $projects,
-            'tasks' => $tasks,
-            'projectStats' => $projectStats,
-            'taskStats' => $taskStats,
-            'upcomingTasks' => $upcomingTasks
-        ]);
+        if ($userRole === 'member') {
+            $this->render('dashboard/userindex', [
+                'pageTitle' => 'Tableau de bord Utilisateur',
+                'projects' => $projects,
+                'tasks' => $tasks,
+                'projectStats' => $projectStats,
+                'taskStats' => $taskStats,
+                'upcomingTasks' => $upcomingTasks
+            ]);
+        }else{
+            $this->render('dashboard/index', [
+                'pageTitle' => 'Tableau de bord Chef de Projet',
+                'projects' => $projects,
+                'tasks' => $tasks,
+                'projectStats' => $projectStats,
+                'taskStats' => $taskStats,
+                'upcomingTasks' => $upcomingTasks
+            ]);
+        }
     }
 }

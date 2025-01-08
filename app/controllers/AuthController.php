@@ -39,7 +39,7 @@ class AuthController extends Controller
 
                 if ($user['role'] === null) {
                     $this->redirect('choose_role');
-                } else {
+                } else if ($user['role'] === 'member' || $user['role'] === 'manager') {
                     $this->redirect('dashboard');
                 }
             } else {
