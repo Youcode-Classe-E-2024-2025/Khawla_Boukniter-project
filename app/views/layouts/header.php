@@ -30,31 +30,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <?php if (is_authenticated()): ?>
-                        <?php if (is_manager()): ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('projects') ?>">
-                                    <i class="bi bi-folder me-1"></i>
-                                    Mes Projets
-                                </a>
-                            </li>
-                        <?php else: ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('tasks') ?>">
-                                    <i class="bi bi-list-check me-1"></i>
-                                    Mes Tâches
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                    <?php else: ?>
+                    <?php if (!is_authenticated()): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="#features">
-                                <i class="bi bi-stars me-1"></i>
-                                Fonctionnalités
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#projects">
+                            <a class="nav-link" href="<?= base_url('projects') ?>/#projects">
                                 <i class="bi bi-collection me-1"></i>
                                 Projets Publics
                             </a>
@@ -75,6 +53,21 @@
                                         Mon Profil
                                     </a>
                                 </li>
+                                <?php if (is_manager()): ?>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" href="<?= base_url('projects') ?>">
+                                            <i class="bi bi-folder me-1"></i>
+                                            Mes Projets
+                                        </a>
+                                    </li>
+                                <?php else: ?>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" href="<?= base_url('tasks') ?>">
+                                            <i class="bi bi-list-check me-1"></i>
+                                            Mes Tâches
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

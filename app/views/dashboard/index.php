@@ -111,6 +111,7 @@ $isManager = $userRole === 'manager';
     </div>
 </div>
 
+
 <!-- Scripts pour les graphiques -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Gestion des alertes auto-dismissibles
     const alerts = document.querySelectorAll('.alert-dismissible');
     alerts.forEach(alert => {
         setTimeout(() => {

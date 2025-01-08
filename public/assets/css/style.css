@@ -35,6 +35,10 @@ body {
     padding: 0.5rem 1rem;
 }
 
+.nav-link:hover {
+    color: var(--accent-color);
+}
+
 /* Section Héro */
 .hero {
     background: url('path/to/your/image.jpg') no-repeat center center/cover;
@@ -120,7 +124,7 @@ body {
     
     .form-control {
         border-color: #404040;
-        color: #f8f9fa;
+        /* color: #f8f9fa; */
     }
     
     .form-control:focus {

@@ -35,7 +35,7 @@ class AuthController extends Controller
             if ($user && password_verify($data['password'], $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
-                $_SESSION['user_role'] = $user['role']; // Stocker le rôle
+                $_SESSION['user_role'] = $user['role'];
 
                 if ($user['role'] === null) {
                     $this->redirect('choose_role');
@@ -75,7 +75,7 @@ class AuthController extends Controller
 
             if ($this->userModel->create($data)) {
                 $_SESSION['success'] = "Compte créé avec succès";
-                $this->redirect('login');
+                $this->redirect('choose_role');
             } else {
                 $_SESSION['error'] = "Erreur lors de la création du compte";
                 $this->redirect('register');

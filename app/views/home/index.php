@@ -111,4 +111,3 @@
     </div>
 </section>
 
-<?php require_once VIEW_PATH . '/layouts/footer.php'; ?>

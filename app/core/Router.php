@@ -40,7 +40,11 @@ class Router
                 if (preg_match('/^\/projects\/(\d+)$/', $uri, $matches) || preg_match('/^\/projects\/(\d+)\/([a-zA-Z]+)$/', $uri, $matches)) {
                     $id = (int)$matches[1];
                     return $controllerInstance->$action($id);
-                } else {
+                } else if (preg_match('/^\/([a-zA-Z]+)\/(\d+)\/([a-zA-Z]+)$/', $uri, $matches)) {
+                    $id = (int)$matches[2];
+                    $scndId = (int)$matches[3];
+                    return $controllerInstance->$action($id, $scndId);
+                }else {
                     return $controllerInstance->$action();
                 }
             }

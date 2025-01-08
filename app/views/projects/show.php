@@ -5,10 +5,11 @@
                 <h4 class="mb-0"><?= htmlspecialchars($project['title']) ?></h4>
                 <?php if ($canEdit): ?>
                     <div>
-                        <a href="<?= base_url('projects/') ?><?= $project['id'] ?>/edit" class="btn btn-secondary btn-sm">Modifier</a>
+                        <a href="<?= base_url('projects/') ?><?= $project['id'] ?>/edit" class="btn btn-secondary btn-sm" title="Modifier">
+                            Modifier
+                        </a>
                         <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/delete" method="POST" class="d-inline">
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
+                            <button type="submit" class="btn btn-secondary btn-sm" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
                                 Supprimer
                             </button>
                         </form>
@@ -30,14 +31,68 @@
             </div>
         </div>
 
-        <div class="card mb-4">
-            <!-- <button><a href="<?= base_url('projects/' . $projectId . '/tasks') ?>" class="btn btn-primary">Voir les tâches de ce projet</a></button> -->
+        <div class="card mb-4" style="padding: 1rem;">
             <h2>Tâches Associées</h2>
-            <ul>
-                <?php foreach ($tasks as $task): ?>
-                    <li><?= htmlspecialchars($task['title']) ?> - <?= htmlspecialchars($task['description']) ?></li>
-                <?php endforeach; ?>
-            </ul>
+            <div class="mb-3">
+                <label for="taskFilter" class="form-label">Filtrer par statut :</label>
+                <select id="taskFilter" class="form-select" onchange="filterTasks()" style="width: 20%">
+                    <option value="">Tous</option>
+                    <option value="todo">À faire</option>
+                    <option value="in_progress">En cours</option>
+                    <option value="completed">Complété</option>
+                </select>
+            </div>
+
+            <table class="table table-striped table-bordered" style="border-radius: 15px;">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Description</th>
+                        <th>Date d'échéance</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($tasks as $task): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($task['title']) ?></td>
+                            <td><?= htmlspecialchars($task['description']) ?></td>
+                            <td><?= htmlspecialchars($task['due_date']) ?></td>
+                            <td>
+                                <span class="badge badge-<?= $task['status'] === 'completed' ? 'success' : ($task['status'] === 'in_progress' ? 'warning' : 'secondary') ?>" style="color: black">
+                                    <?= ucfirst($task['status']) ?>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="<?= base_url('tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm" title="Modifier" style="padding: 0.5rem 1rem;">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="<?= base_url('tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-warning btn-sm" title="Supprimer" style="padding: 0.5rem 1rem;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <script>
+                function filterTasks() {
+                    const filter = document.getElementById('taskFilter').value;
+                    const rows = document.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const status = row.querySelector('.badge').textContent.toLowerCase();
+                        if (filter === '' || status.includes(filter)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                }
+            </script>
         </div>
 
         <!-- Section des tâches sera ajoutée ici  -->

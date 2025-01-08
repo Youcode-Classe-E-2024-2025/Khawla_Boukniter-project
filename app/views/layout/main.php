@@ -4,14 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $pageTitle ?? 'Gestionnaire de Projets' ?></title>
+    <title><?= isset($pageTitle) ? $pageTitle . ' - ' : '' ?>Gestionnaire de Projets</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <link href="<?= asset_url('css/style.css') ?>" rel="stylesheet">
-    <link href="<?= asset_url('css/home.css') ?>" rel="stylesheet">
+    <?php if (isset($isHomePage) && $isHomePage): ?>
+        <link href="<?= asset_url('css/home.css') ?>" rel="stylesheet">
+    <?php endif; ?>
 </head>
 
 <body>
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="<?= base_url() ?>">
@@ -23,31 +30,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <?php if (is_authenticated()): ?>
-                        <?php if (is_manager()): ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('projects') ?>">
-                                    <i class="bi bi-folder me-1"></i>
-                                    Mes Projets
-                                </a>
-                            </li>
-                        <?php else: ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('tasks') ?>">
-                                    <i class="bi bi-list-check me-1"></i>
-                                    Mes Tâches
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                    <?php else: ?>
+                    <?php if (!is_authenticated()): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="#features">
-                                <i class="bi bi-stars me-1"></i>
-                                Fonctionnalités
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#projects">
+                            <a class="nav-link" href="<?= base_url('projects') ?>/#projects">
                                 <i class="bi bi-collection me-1"></i>
                                 Projets Publics
                             </a>
@@ -70,10 +55,25 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
-                                        <i class="bi bi-person me-2"></i>
-                                        Dashboard
+                                        <i class="bi bi-grid me-2"></i>
+                                        Tableau de Bord
                                     </a>
                                 </li>
+                                <?php if (is_manager()): ?>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" href="<?= base_url('projects') ?>">
+                                            <i class="bi bi-folder me-1"></i>
+                                            Mes Projets
+                                        </a>
+                                    </li>
+                                <?php else: ?>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" href="<?= base_url('tasks') ?>">
+                                            <i class="bi bi-list-check me-1"></i>
+                                            Mes Tâches
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -104,59 +104,88 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-circle me-2"></i>
-                <?= $_SESSION['error'] ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <?php unset($_SESSION['error']); ?>
-            </div>
-        <?php endif; ?>
+    <!-- Flash Messages -->
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['success'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
 
-        <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle me-2"></i>
-                <?= $_SESSION['success'] ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <?php unset($_SESSION['success']); ?>
-            </div>
-        <?php endif; ?>
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= $_SESSION['error'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
 
+    <!-- Contenu de la page -->
+    <main class="container mt-4">
         <?= $content ?>
-    </div>
+    </main>
 
-    <?php if (!is_authenticated()): ?>
-        <!-- <footer class="bg-light mt-5 py-4">
+    <footer class="footer mt-auto py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <h5>Gestionnaire de Projets</h5>
-                    <p class="text-muted">
-                        Une solution complète pour la gestion de vos projets et la collaboration d'équipe.
-                    </p>
+                <div class="col-md-4">
+                    <h5 class="mb-3">ProjetManager</h5>
+                    <p>Une solution simple et puissante pour la gestion de projets en équipe.</p>
                 </div>
-                <div class="col-md-3">
-                    <h5>Liens rapides</h5>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Liens rapides</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#features" class="text-decoration-none">Fonctionnalités</a></li>
-                        <li><a href="#projects" class="text-decoration-none">Projets Publics</a></li>
-                        <li><a href="<?= base_url('register') ?>" class="text-decoration-none">S'inscrire</a></li>
+                        <li><a href="<?= base_url() ?>" class="text-decoration-none">Accueil</a></li>
+                        <?php if (is_authenticated()): ?>
+                            <li><a href="<?= base_url('dashboard') ?>" class="text-decoration-none">Tableau de bord</a></li>
+                            <li><a href="<?= base_url('projects') ?>" class="text-decoration-none">Projets</a></li>
+                        <?php else: ?>
+                            <li><a href="<?= base_url('login') ?>" class="text-decoration-none">Connexion</a></li>
+                            <li><a href="<?= base_url('register') ?>" class="text-decoration-none">Inscription</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
-                <div class="col-md-3">
-                    <h5>Contact</h5>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact</h5>
                     <ul class="list-unstyled">
-                        <li><a href="mailto:contact@example.com" class="text-decoration-none">contact@example.com</a></li>
-                        <li>+1 234 567 890</li>
+                        <li><i class="bi bi-envelope me-2"></i>contact@projetmanager.com</li>
+                        <li><i class="bi bi-telephone me-2"></i>+33 1 23 45 67 89</li>
+                        <li><i class="bi bi-geo-alt me-2"></i>Paris, France</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; <?= date('Y') ?> ProjetManager. Tous droits réservés.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="list-inline mb-0" style="text-align: center;">
+                        <li class="list-inline-item">
+                            <a href="#" class="text-decoration-none">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="text-decoration-none">
+                                <i class="bi bi-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="text-decoration-none">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-    </footer> -->
-    <?php endif; ?>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <!-- Custom JavaScript -->
+    <script src="<?= asset_url('js/main.js') ?>"></script>
+    </body>
 
-</html>
+    </html>

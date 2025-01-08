@@ -45,7 +45,6 @@ $router->addRoute('POST', '/projects', [ProjectController::class, 'store']);
 $router->addRoute('GET', '/projects/{id}', [ProjectController::class, 'show']);
 $router->addRoute('GET', '/projects/{id}/edit', [ProjectController::class, 'edit']);
 $router->addRoute('POST', '/projects/{id}/edit', [ProjectController::class, 'update']);
-// $router->addRoute('GET', '/projects/{id}/invite', [ProjectController::class, 'invite']);
 $router->addRoute('POST', '/projects/{id}/invite', [ProjectController::class, 'inviteMember']);
 $router->addRoute('POST', '/projects/{id}/delete', [ProjectController::class, 'delete']);
 $router->addRoute('POST', '/projects/{id}/members', [ProjectController::class, 'addMember']);
@@ -58,7 +57,7 @@ $router->addRoute('GET', '/projects/{projectId}/tasks/create', [TaskController::
 $router->addRoute('POST', '/projects/{projectId}/tasks', [TaskController::class, 'store']);
 $router->addRoute('GET', '/tasks/{id}', [TaskController::class, 'show']);
 $router->addRoute('GET', '/tasks/{id}/edit', [TaskController::class, 'edit']);
-$router->addRoute('POST', '/tasks/{id}', [TaskController::class, 'update']);
+$router->addRoute('POST', '/tasks/{id}/', [TaskController::class, 'update']);
 $router->addRoute('POST', '/tasks/{id}/delete', [TaskController::class, 'delete']);
 $router->addRoute('POST', '/tasks/{id}/status', [TaskController::class, 'updateStatus']);
 
