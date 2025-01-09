@@ -53,13 +53,17 @@ $router->addRoute('POST', '/projects/{id}/members/{userId}/remove', [ProjectCont
 // Routes pour les tâches
 $router->addRoute('GET', '/projects/{id}/tasks', [TaskController::class, 'index']);
 // $router->addRoute('GET', '/projects/{id}/tasks', [TaskController::class,'showTasks']);
+$router->addRoute('GET', '/projects/{projectId}/tasks/create', [TaskController::class, 'create']);
 $router->addRoute('GET', '/projects/{id}/tasks/create', [TaskController::class, 'create']);
 $router->addRoute('POST', '/projects/{id}/tasks', [TaskController::class, 'store']);
 $router->addRoute('GET', '/tasks/{id}', [TaskController::class, 'show']);
-$router->addRoute('GET', '/tasks/{id}/edit', [TaskController::class, 'edit']);
+$router->addRoute('GET', 'projects/{projectId}/tasks/{taskId}/edit', [TaskController::class, 'edit']);
 $router->addRoute('POST', '/tasks/{id}/', [TaskController::class, 'update']);
 $router->addRoute('POST', '/tasks/{id}/delete', [TaskController::class, 'delete']);
-$router->addRoute('POST', '/tasks/{id}/status', [TaskController::class, 'updateStatus']);
+// $router->addRoute('POST', '/tasks/{id}/update_status', [TaskController::class, 'updateStatus']);
+$router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/update_status', [TaskController::class, 'updateStatus']);
+$router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/delete', [TaskController::class, 'delete']);
+$router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/delete', [TaskController::class, 'delete']);
 
 // Routes pour les catégories
 $router->addRoute('GET', '/categories', [CategoryController::class, 'index']);

@@ -69,10 +69,10 @@
                             </td>
                             <?php if (is_manager()): ?>
                             <td>
-                                <a href="<?= base_url('tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
+                                <a href="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="<?= base_url('tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
+                                <form action="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
                                     <button type="submit" class="btn btn-warning btn-sm icone" title="Supprimer" style="padding: 0.5rem 1rem;">
                                         <i class="fas fa-trash"></i>
                                     </button>

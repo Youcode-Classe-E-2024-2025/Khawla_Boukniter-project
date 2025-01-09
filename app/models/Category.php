@@ -13,12 +13,11 @@ class Category {
     }
 
     public function create(array $data): int {
-        $sql = "INSERT INTO categories (name, project_id) VALUES (:name, :project_id)";
+        $sql = "INSERT INTO categories (name) VALUES (:name)";
         $stmt = $this->db->prepare($sql);
         
         $stmt->execute([
             'name' => $data['name'],
-            'project_id' => $data['project_id']
         ]);
 
         return $this->db->lastInsertId();
@@ -58,12 +57,11 @@ class Category {
         $sql = "SELECT c.*, COUNT(t.id) as task_count 
                 FROM categories c 
                 LEFT JOIN tasks t ON c.id = t.category_id 
-                WHERE c.project_id = :project_id 
                 GROUP BY c.id 
                 ORDER BY c.name ASC";
         
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['project_id' => $projectId]);
+        $stmt->execute();
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

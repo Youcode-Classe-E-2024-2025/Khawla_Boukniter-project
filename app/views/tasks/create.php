@@ -5,7 +5,7 @@
                 <h4 class="mb-0">Nouvelle tâche - <?= htmlspecialchars($project['title']) ?></h4>
             </div>
             <div class="card-body">
-                <form action="/projects/<?= $project['id'] ?>/tasks" method="POST">
+                <form action="<?= base_url('projects/' . $project['id'] . '/tasks') ?>" method="POST">
                     <div class="mb-3">
                         <label for="title" class="form-label">Titre de la tâche</label>
                         <input type="text" class="form-control" id="title" name="title" required>
@@ -25,27 +25,18 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="priority" class="form-label">Priorité</label>
-                                <select class="form-select" id="priority" name="priority">
-                                    <option value="1">Basse</option>
-                                    <option value="2">Moyenne</option>
-                                    <option value="3">Haute</option>
+                                <label for="status" class="form-label">Statut</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="">Sélectionnez un statut</option>
+                                    <option value="doing">En cours</option>
+                                    <option value="done">Terminé</option>
+                                    <option value="todo">À faire</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="tag" class="form-label">Tag</label>
-                                <select class="form-select" id="tag" name="tag">
-                                    <option value="basic">Basic</option>
-                                    <option value="bug">Bug</option>
-                                    <option value="feature">Feature</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="category_id" class="form-label">Catégorie</label>
@@ -59,22 +50,35 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <label for="category" class="form-label">Nouvelle Catégorie</label>
+                            <input type="text" class="form-control" id="category" name="category">
+                        </div>
                     </div>
 
+                    
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="tags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="tags" name="tags">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                     <div class="mb-3">
                         <label for="assigned_to" class="form-label">Assigner à</label>
                         <select class="form-select" id="assigned_to" name="assigned_to">
-                            <option value="">Non assigné</option>
+                            <option value="">Sélectionnez un membre</option>
                             <?php foreach ($members as $member): ?>
-                                <?php if ($member['status'] === 'accepted'): ?>
-                                    <option value="<?= $member['id'] ?>">
-                                        <?= htmlspecialchars($member['name']) ?>
-                                    </option>
-                                <?php endif; ?>
+                                <option value="<?= $member['id'] ?>"><?= htmlspecialchars($member['name']) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    </div>
+                </div>
 
+                    
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Créer la tâche</button>
                         <a href="/projects/<?= $project['id'] ?>/tasks" class="btn btn-secondary">Annuler</a>
@@ -84,3 +88,15 @@
         </div>
     </div>
 </div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.4/tagify.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.4/tagify.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var inputTags = document.querySelector('#tags');
+        var inputEmails = document.querySelector('#assigned_emails');
+
+        new Tagify(inputTags);
+        new Tagify(inputEmails);
+    });
+</script>

@@ -10,8 +10,8 @@
                         <label for="status" class="form-label">Sélectionnez le Statut</label>
                         <select class="form-control" id="status" name="status" required>
                             <option value="todo" <?= $task['status'] === 'todo' ? 'selected' : '' ?>>À faire</option>
-                            <option value="in_progress" <?= $task['status'] === 'in_progress' ? 'selected' : '' ?>>En cours</option>
-                            <option value="completed" <?= $task['status'] === 'completed' ? 'selected' : '' ?>>Terminé</option>
+                            <option value="doing" <?= $task['status'] === 'doing' ? 'selected' : '' ?>>En cours</option>
+                            <option value="done" <?= $task['status'] === 'done' ? 'selected' : '' ?>>Terminé</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Mettre à Jour le Statut</button>

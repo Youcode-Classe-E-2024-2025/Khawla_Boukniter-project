@@ -6,18 +6,21 @@ use App\Core\Controller;
 use App\Models\Task;
 use App\Models\Project;
 use App\Models\Category;
+use App\Models\Tag;
 
 class TaskController extends Controller
 {
     private Task $taskModel;
     private Project $projectModel;
     private Category $categoryModel;
+    private Tag $tagModel;
 
     public function __construct()
     {
         $this->taskModel = new Task();
         $this->projectModel = new Project();
         $this->categoryModel = new Category();
+        $this->tagModel = new Tag();
     }
 
     public function index()
@@ -28,10 +31,18 @@ class TaskController extends Controller
 
         if ($_SESSION['user_role'] === 'member') {
             $tasks = $this->taskModel->getByMember($_SESSION['user_id']);
-            $this->render('tasks/show', ['tasks' => $tasks]);
+            $project = $this->projectModel->findById($_SESSION['user_id']);
+            $this->render('tasks/show', [
+                'tasks' => $tasks,
+                'project' => $project
+            ]);
         } else if ($_SESSION['user_role'] === 'manager') {
             $tasks = $this->taskModel->getByProject($_SESSION['user_id']);
-            $this->render('tasks/show', ['tasks' => $tasks]);
+            $project = $this->projectModel->findById($_SESSION['user_id']);
+            $this->render('tasks/show', [
+                'tasks' => $tasks,
+                'project' => $project
+            ]);
         } else {
             $this->redirect('/projects');
         }
@@ -120,35 +131,62 @@ class TaskController extends Controller
 
     public function store(int $projectId)
     {
-        if (
-            !$this->isAuthenticated() ||
-            $_SESSION['user_role'] !== 'manager' ||
-            !$this->isPost()
-        ) {
-            $this->redirect('/projects');
-        }
-
-        $project = $this->projectModel->findById($projectId);
-        if (!$project || $project['manager_id'] !== $_SESSION['user_id']) {
+        if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $this->redirect('/projects');
         }
 
         $data = $this->getPostData();
-        $data['project_id'] = $projectId;
+        $data['project_id'] = $projectId; // Associe la tâche au projet
 
-        // Validation basique
+        // Validation des champs requis
         if (empty($data['title']) || empty($data['deadline'])) {
-            $_SESSION['error'] = "Le titre et la date limite sont requis";
-            $this->redirect("/projects/$projectId/tasks/create");
+            $_SESSION['error'] = "Le titre et la date limite sont requis.";
+            $this->redirect("projects/$projectId/tasks/create");
+            return;
         }
 
-        if ($this->taskModel->create($data)) {
-            $_SESSION['success'] = "Tâche créée avec succès";
+        // Gestion des tags
+        $tags = isset($data['tags']) ? json_decode($data['tags'], true) : [];
+        $tagIds = [];
+
+        foreach ($tags as $tag) {
+            $tagName = trim($tag['value']); // Extraire la valeur du tag
+            if (!empty($tagName)) {
+                // Vérifiez si le tag existe déjà
+                $existingTag = $this->tagModel->findByName($tagName);
+                if ($existingTag) {
+                    $tagIds[] = $existingTag['id'];
+                } else {
+                    // Si le tag n'existe pas, créez-le
+                    $tagId = $this->tagModel->create(['name' => $tagName]);
+                    $tagIds[] = $tagId;
+                }
+            }
+        }
+
+        // Créer la tâche
+        $taskId = $this->taskModel->create($data);
+
+        // Lier les tags à la tâche
+        foreach ($tagIds as $tagId) {
+            $this->taskModel->linkTagToTask($taskId, $tagId);
+        }
+
+        // Ajout de la logique pour gérer les tags
+        $data['tags'] = isset($data['tags']) ? json_decode($data['tags'], true) : [];
+        // Logique pour ajouter la catégorie si elle n'existe pas
+        if (!empty($data['category'])) {
+            $categoryId = $this->categoryModel->create(['name' => $data['category']]);
+            $data['category_id'] = $categoryId;
+        }
+
+        if ($this->taskModel->update($taskId, $data)) {
+            $_SESSION['success'] = "Tâche créée avec succès.";
+            $this->redirect("projects/$projectId/tasks");
         } else {
-            $_SESSION['error'] = "Erreur lors de la création de la tâche";
+            $_SESSION['error'] = "Erreur lors de la création de la tâche.";
+            $this->redirect("projects/$projectId/tasks/create");
         }
-
-        $this->redirect("/projects/$projectId/tasks");
     }
 
     public function edit(int $projectId, int $taskId)
@@ -208,6 +246,12 @@ class TaskController extends Controller
         $data = $this->getPostData();
         $data['project_id'] = $projectId;
 
+        $data['tags'] = isset($data['tags']) ? json_decode($data['tags'], true) : [];
+        if (!empty($data['category'])) {
+            $categoryId = $this->categoryModel->create(['name' => $data['category']]);
+            $data['category_id'] = $categoryId;
+        }
+
         if (empty($data['title']) || empty($data['deadline'])) {
             $_SESSION['error'] = "Le titre et la date limite sont requis";
             $this->redirect("/projects/$projectId/tasks/$taskId/edit");
@@ -247,38 +291,43 @@ class TaskController extends Controller
     }
 
     public function updateStatus(int $projectId, int $taskId)
-    {
-        if (!$this->isAuthenticated() || !$this->isPost()) {
-            $this->redirect('/projects');
-        }
+{
+    if (!$this->isAuthenticated() || !$this->isPost()) {
+        $this->redirect('/projects');
+    }
 
-        $task = $this->taskModel->findById($taskId);
-        if (!$task || $task['project_id'] !== $projectId) {
-            $this->redirect("/projects/$projectId/tasks");
-        }
-
-        $isManager = $_SESSION['user_role'] === 'manager' &&
-            $task['manager_id'] === $_SESSION['user_id'];
-        $isAssigned = $task['assigned_to'] === $_SESSION['user_id'];
-
-        if (!$isManager && !$isAssigned) {
-            $this->redirect("/projects/$projectId/tasks");
-        }
-
-        $data = $this->getPostData();
-        if (!in_array($data['status'], ['todo', 'in_progress', 'done'])) {
-            $_SESSION['error'] = "Statut invalide";
-            $this->redirect("/projects/$projectId/tasks");
-        }
-
-        if ($this->taskModel->updateStatus($taskId, $data['status'], $projectId)) {
-            $_SESSION['success'] = "Statut de la tâche mis à jour";
-        } else {
-            $_SESSION['error'] = "Erreur lors de la mise à jour du statut";
-        }
-
+    $task = $this->taskModel->findById($taskId);
+    if (!$task || $task['project_id'] !== $projectId) {
         $this->redirect("/projects/$projectId/tasks");
     }
+
+    $isManager = $_SESSION['user_role'] === 'manager' && $task['manager_id'] === $_SESSION['user_id'];
+    $isAssigned = $task['assigned_to'] === $_SESSION['user_id'];
+
+    if (!$isManager && !$isAssigned) {
+        $this->redirect("/projects/$projectId/tasks");
+    }
+
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    if (!in_array($data['status'], ['todo', 'doing', 'done'])) {
+        $_SESSION['error'] = "Statut invalide";
+        $this->redirect("/projects/$projectId/tasks");
+    }
+
+    $task = $this->taskModel->findById($taskId);
+    if (!$task || $task['project_id'] !== $projectId) {
+        $this->redirect("/projects/$projectId/tasks");
+    }
+
+    if ($this->taskModel->updateStatus($taskId, $data['status'], $projectId)) {
+        $_SESSION['success'] = "Statut de la tâche mis à jour";
+    } else {
+        $_SESSION['error'] = "Erreur lors de la mise à jour du statut";
+    }
+
+    $this->redirect("/projects/$projectId/tasks");
+}
 
     public function validateTask($taskId)
     {

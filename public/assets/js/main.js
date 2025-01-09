@@ -100,3 +100,32 @@ document.addEventListener('DOMContentLoaded', function() {
         return new bootstrap.Popover(popoverTriggerEl);
     });
 });
+
+// function allowDrop(ev) {
+//     ev.preventDefault();
+// }
+
+// function drag(ev) {
+//     ev.dataTransfer.setData("text", ev.target.id);
+// }
+
+// function drop(event, newStatus) {
+//     event.preventDefault();
+//     const taskId = event.dataTransfer.getData("text");
+//     updateTaskStatus(taskId, newStatus);
+// }
+
+// function updateTaskStatus(taskId, newStatus) {
+//     fetch(`/tasks/${taskId}/status`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ status: newStatus })
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(data);
+//     })
+//     .catch(error => console.error('Error:', error));
+// }

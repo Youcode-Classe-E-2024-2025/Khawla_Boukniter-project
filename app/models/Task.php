@@ -16,9 +16,9 @@ class Task
 
     public function create(array $data): int
     {
-        $sql = "INSERT INTO tasks (title, description, status, priority, deadline, tag, 
+        $sql = "INSERT INTO tasks (title, description, status, deadline, 
                                  project_id, category_id, assigned_to) 
-                VALUES (:title, :description, :status, :priority, :deadline, :tag,
+                VALUES (:title, :description, :status, :deadline,
                         :project_id, :category_id, :assigned_to)";
 
         $stmt = $this->db->prepare($sql);
@@ -26,9 +26,7 @@ class Task
             'title' => $data['title'],
             'description' => $data['description'],
             'status' => $data['status'] ?? 'todo',
-            'priority' => $data['priority'] ?? 1,
             'deadline' => $data['deadline'],
-            'tag' => $data['tag'] ?? 'basic',
             'project_id' => $data['project_id'],
             'category_id' => $data['category_id'] ?? null,
             'assigned_to' => $data['assigned_to'] ?? null
@@ -43,9 +41,7 @@ class Task
                 SET title = :title,
                     description = :description,
                     status = :status,
-                    priority = :priority,
                     deadline = :deadline,
-                    tag = :tag,
                     category_id = :category_id,
                     assigned_to = :assigned_to
                 WHERE id = :id AND project_id = :project_id";
@@ -56,9 +52,7 @@ class Task
             'title' => $data['title'],
             'description' => $data['description'],
             'status' => $data['status'],
-            'priority' => $data['priority'],
             'deadline' => $data['deadline'],
-            'tag' => $data['tag'],
             'category_id' => $data['category_id'] ?? null,
             'assigned_to' => $data['assigned_to'] ?? null,
             'project_id' => $data['project_id']
@@ -110,7 +104,7 @@ class Task
                 LEFT JOIN categories c ON t.category_id = c.id 
                 LEFT JOIN users u ON t.assigned_to = u.id 
                 WHERE t.project_id = :project_id 
-                ORDER BY t.priority DESC, t.deadline ASC";
+                ORDER BY t.deadline ASC";
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['project_id' => $projectId]);
@@ -166,5 +160,12 @@ class Task
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function linkTagToTask(int $taskId, int $tagId): void
+    {
+        $sql = "INSERT INTO task_tags (task_id, tag_id) VALUES (:task_id, :tag_id)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['task_id' => $taskId, 'tag_id' => $tagId]);
     }
 }
