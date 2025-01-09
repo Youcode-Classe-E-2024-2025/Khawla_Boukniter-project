@@ -36,7 +36,7 @@ $isManager = $userRole === 'manager';
             <div class="card h-100">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2">Tâches En Cours</h6>
-                    <h2 class="card-title mb-0"><?= $taskStats['in_progress'] ?></h2>
+                    <h2 class="card-title mb-0"><?= $taskStats['doing'] ?></h2>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@ $isManager = $userRole === 'manager';
             <div class="card h-100">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2">Tâches Terminées</h6>
-                    <h2 class="card-title mb-0"><?= $taskStats['completed'] ?></h2>
+                    <h2 class="card-title mb-0"><?= $taskStats['done'] ?></h2>
                 </div>
             </div>
         </div>
@@ -94,8 +94,8 @@ $isManager = $userRole === 'manager';
                             <?php foreach ($upcomingTasks as $task): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($task['title']) ?></td>
-                                    <td><?= htmlspecialchars($task['project_title']) ?></td>
-                                    <td><?= format_date($task['due_date']) ?></td>
+                                    <td><?= htmlspecialchars($task['title']) ?></td>
+                                    <td><?= isset($task['deadline']) && $task['deadline'] ? date('d/m/Y', strtotime($task['deadline'])) : 'Date non définie' ?></td>
                                     <td>
                                         <span class="badge bg-<?= get_status_color($task['status']) ?>">
                                             <?= get_status_label($task['status']) ?>

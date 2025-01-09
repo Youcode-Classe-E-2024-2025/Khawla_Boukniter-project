@@ -63,12 +63,12 @@
                                             Mes Projets
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a class="dropdown-item" href="<?= base_url('tasks') ?>">
                                             <i class="bi bi-list-check me-1"></i>
                                             Mes Tâches
                                         </a>
-                                    </li>
+                                    </li> -->
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

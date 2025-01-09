@@ -25,7 +25,7 @@
         <div class="card bg-info text-white">
             <div class="card-body">
                 <h5 class="card-title">En cours</h5>
-                <h2 class="card-text"><?= $taskStats['in_progress'] ?? 0 ?></h2>
+                <h2 class="card-text"><?= $taskStats['doing'] ?? 0 ?></h2>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="card-body">
                 <?php foreach ($tasks as $task): ?>
-                    <?php if ($task['status'] === 'in_progress'): ?>
+                    <?php if ($task['status'] === 'doing'): ?>
                         <?= renderTaskCard($task, $project['id'], $isManager) ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -151,7 +151,7 @@ function renderTaskCard($task, $projectId, $isManager) {
                             </li>
                             <li>
                                 <form action="/projects/<?= $projectId ?>/tasks/<?= $task['id'] ?>/status" method="POST">
-                                    <input type="hidden" name="status" value="in_progress">
+                                    <input type="hidden" name="status" value="doing">
                                     <button type="submit" class="dropdown-item">En cours</button>
                                 </form>
                             </li>

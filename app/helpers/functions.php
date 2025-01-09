@@ -51,8 +51,8 @@ function get_status_color($status)
 {
     return match ($status) {
         'todo' => 'warning',
-        'in_progress' => 'info',
-        'completed' => 'success',
+        'doing' => 'info',
+        'done' => 'success',
         'active' => 'primary',
         'archived' => 'secondary',
         default => 'light'
@@ -63,8 +63,8 @@ function get_status_label($status)
 {
     return match ($status) {
         'todo' => 'À faire',
-        'in_progress' => 'En cours',
-        'completed' => 'Terminé',
+        'doing' => 'En cours',
+        'done' => 'Terminé',
         'active' => 'Actif',
         'archived' => 'Archivé',
         default => 'Inconnu'

@@ -30,7 +30,7 @@
                         </div>
                         <div class="card-body">
                             <?php foreach ($tasks as $task): ?>
-                                <?php if ($task['status'] === 'in_progress'): ?>
+                                <?php if ($task['status'] === 'doing'): ?>
                                     <?= renderMemberTaskCard($task) ?>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -100,7 +100,7 @@ function renderMemberTaskCard($task) {
                     </li>
                     <li>
                         <form action="/projects/<?= $task['project_id'] ?>/tasks/<?= $task['id'] ?>/status" method="POST">
-                            <input type="hidden" name="status" value="in_progress">
+                            <input type="hidden" name="status" value="doing">
                             <button type="submit" class="dropdown-item">En cours</button>
                         </form>
                     </li>

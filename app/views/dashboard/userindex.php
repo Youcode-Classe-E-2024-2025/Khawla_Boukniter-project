@@ -67,8 +67,8 @@
                             <?php foreach ($upcomingTasks as $task): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($task['title']) ?></td>
-                                    <td><?= htmlspecialchars($task['project_title']) ?></td>
-                                    <td><?= format_date($task['due_date']) ?></td>
+                                    <td><?= htmlspecialchars($task['title']) ?></td>
+                                    <td><?= isset($task['deadline']) && $task['deadline'] ? date('d/m/Y', strtotime($task['deadline'])) : 'Date non définie' ?></td>
                                     <td><span class="badge bg-<?= get_status_color($task['status']) ?>"><?= get_status_label($task['status']) ?></span></td>
                                 </tr>
                             <?php endforeach; ?>

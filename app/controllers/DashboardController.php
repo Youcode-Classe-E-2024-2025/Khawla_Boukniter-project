@@ -48,11 +48,11 @@ class DashboardController extends Controller {
             'todo' => array_reduce($tasks, function($count, $task) {
                 return $count + ($task['status'] === 'todo' ? 1 : 0);
             }, 0),
-            'in_progress' => array_reduce($tasks, function($count, $task) {
-                return $count + ($task['status'] === 'in_progress' ? 1 : 0);
+            'doing' => array_reduce($tasks, function($count, $task) {
+                return $count + ($task['status'] === 'doing' ? 1 : 0);
             }, 0),
-            'completed' => array_reduce($tasks, function($count, $task) {
-                return $count + ($task['status'] === 'completed' ? 1 : 0);
+            'done' => array_reduce($tasks, function($count, $task) {
+                return $count + ($task['status'] === 'done' ? 1 : 0);
             }, 0)
         ];
 

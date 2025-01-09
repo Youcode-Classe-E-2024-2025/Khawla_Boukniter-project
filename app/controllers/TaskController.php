@@ -28,7 +28,10 @@ class TaskController extends Controller
 
         if ($_SESSION['user_role'] === 'member') {
             $tasks = $this->taskModel->getByMember($_SESSION['user_id']);
-            $this->render('tasks/member-index', ['tasks' => $tasks]);
+            $this->render('tasks/show', ['tasks' => $tasks]);
+        } else if ($_SESSION['user_role'] === 'manager') {
+            $tasks = $this->taskModel->getByProject($_SESSION['user_id']);
+            $this->render('tasks/show', ['tasks' => $tasks]);
         } else {
             $this->redirect('/projects');
         }
@@ -154,15 +157,22 @@ class TaskController extends Controller
             $this->redirect('/projects');
         }
 
+        error_log('User authenticated: ' . ($this->isAuthenticated() ? 'Yes' : 'No'));
+        error_log('User role: ' . $_SESSION['user_role']);
+
         $project = $this->projectModel->findById($projectId);
         if (!$project || $project['manager_id'] !== $_SESSION['user_id']) {
+            error_log('Project not found or user is not the manager.');
             $this->redirect('/projects');
         }
 
         $task = $this->taskModel->findById($taskId);
         if (!$task || $task['project_id'] !== $projectId) {
+            error_log('Task not found or does not belong to the project.');
             $this->redirect("/projects/$projectId/tasks");
         }
+
+        error_log('Task exists and belongs to the project.');
 
         $categories = $this->categoryModel->getByProject($projectId);
         $members = $this->projectModel->getMembers($projectId);
@@ -247,7 +257,6 @@ class TaskController extends Controller
             $this->redirect("/projects/$projectId/tasks");
         }
 
-        // Vérifier si l'utilisateur est le chef de projet ou le membre assigné
         $isManager = $_SESSION['user_role'] === 'manager' &&
             $task['manager_id'] === $_SESSION['user_id'];
         $isAssigned = $task['assigned_to'] === $_SESSION['user_id'];

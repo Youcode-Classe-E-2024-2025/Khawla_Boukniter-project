@@ -39,8 +39,8 @@
                 <select id="taskFilter" class="form-select" onchange="filterTasks()" style="width: 20%">
                     <option value="">Tous</option>
                     <option value="todo">À faire</option>
-                    <option value="in_progress">En cours</option>
-                    <option value="completed">Complété</option>
+                    <option value="doing">En cours</option>
+                    <option value="done">Complété</option>
                 </select>
             </div>
 
@@ -61,9 +61,9 @@
                         <tr>
                             <td><?= htmlspecialchars($task['title']) ?></td>
                             <td><?= htmlspecialchars($task['description']) ?></td>
-                            <td><?= htmlspecialchars($task['due_date']) ?></td>
+                            <td><?= isset($task['deadline']) && $task['deadline'] ? date('d/m/Y', strtotime($task['deadline'])) : 'Date non définie' ?></td>
                             <td>
-                                <span class="badge badge-<?= $task['status'] === 'completed' ? 'success' : ($task['status'] === 'in_progress' ? 'warning' : 'secondary') ?>" style="color: black">
+                                <span class="badge badge-<?= $task['status'] === 'done' ? 'success' : ($task['status'] === 'doing' ? 'warning' : 'secondary') ?>" style="color: black">
                                     <?= ucfirst($task['status']) ?>
                                 </span>
                             </td>

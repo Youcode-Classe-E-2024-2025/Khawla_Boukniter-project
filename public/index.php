@@ -51,10 +51,10 @@ $router->addRoute('POST', '/projects/{id}/members', [ProjectController::class, '
 $router->addRoute('POST', '/projects/{id}/members/{userId}/remove', [ProjectController::class, 'removeMember']);
 
 // Routes pour les tâches
-$router->addRoute('GET', '/projects/{projectId}/tasks', [TaskController::class, 'index']);
-$router->addRoute('GET', '/projects/{projectId}/tasks', [TaskController::class,'showTasks']);
-$router->addRoute('GET', '/projects/{projectId}/tasks/create', [TaskController::class, 'create']);
-$router->addRoute('POST', '/projects/{projectId}/tasks', [TaskController::class, 'store']);
+$router->addRoute('GET', '/projects/{id}/tasks', [TaskController::class, 'index']);
+// $router->addRoute('GET', '/projects/{id}/tasks', [TaskController::class,'showTasks']);
+$router->addRoute('GET', '/projects/{id}/tasks/create', [TaskController::class, 'create']);
+$router->addRoute('POST', '/projects/{id}/tasks', [TaskController::class, 'store']);
 $router->addRoute('GET', '/tasks/{id}', [TaskController::class, 'show']);
 $router->addRoute('GET', '/tasks/{id}/edit', [TaskController::class, 'edit']);
 $router->addRoute('POST', '/tasks/{id}/', [TaskController::class, 'update']);

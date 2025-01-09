@@ -81,6 +81,15 @@ body {
     padding: 0.5rem 1rem;
 }
 
+.task-title {
+    font-weight: bold; 
+    color: var(--accent-color);
+}
+.task-description {
+    font-size: 18px; 
+    color: #333;
+}
+
 /* Footer */
 .footer {
     background-color: var(--primary-color); /* Couleur de fond sombre */
