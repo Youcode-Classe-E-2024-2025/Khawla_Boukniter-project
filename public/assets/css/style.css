@@ -77,6 +77,10 @@ body {
     background-color: #ff79b0; /* Couleur au survol */
 }
 
+.icone {
+    padding: 0.5rem 1rem;
+}
+
 /* Footer */
 .footer {
     background-color: var(--primary-color); /* Couleur de fond sombre */

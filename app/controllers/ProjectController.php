@@ -189,7 +189,7 @@ class ProjectController extends Controller
     {
         if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
             $_SESSION['error'] = "Vous devez être un chef de projet pour inviter des membres.";
-            $this->redirect('dashboard');
+            $this->redirect('projects');
             return;
         }
 

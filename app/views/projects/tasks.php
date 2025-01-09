@@ -21,7 +21,6 @@
 
     <h2>Tâches Existantes</h2>
     <ul id="taskList">
-        <!-- Ici, vous pouvez afficher les tâches existantes -->
         <?php foreach ($tasks as $task): ?>
             <li><?= htmlspecialchars($task['name']) ?> - <?= htmlspecialchars($task['description']) ?></li>
         <?php endforeach; ?>

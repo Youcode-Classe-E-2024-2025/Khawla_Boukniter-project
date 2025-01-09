@@ -28,6 +28,7 @@
                     </div>
                 </div>
                 <p><strong>Visibilité:</strong> <?= $project['is_public'] ? 'Public' : 'Privé' ?></p>
+                <a href="<?= base_url('projects/' . $project['id'] . '/tasks') ?>" class="btn btn-secondary mb-3">Voir les Tâches</a>
             </div>
         </div>
 
@@ -50,7 +51,9 @@
                         <th>Description</th>
                         <th>Date d'échéance</th>
                         <th>Statut</th>
-                        <th>Actions</th>
+                        <?php if (is_manager()): ?>
+                            <th>Actions</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,16 +67,18 @@
                                     <?= ucfirst($task['status']) ?>
                                 </span>
                             </td>
+                            <?php if (is_manager()): ?>
                             <td>
-                                <a href="<?= base_url('tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm" title="Modifier" style="padding: 0.5rem 1rem;">
+                                <a href="<?= base_url('tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form action="<?= base_url('tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-warning btn-sm" title="Supprimer" style="padding: 0.5rem 1rem;">
+                                    <button type="submit" class="btn btn-warning btn-sm icone" title="Supprimer" style="padding: 0.5rem 1rem;">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
                             </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -108,7 +113,7 @@
                     <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/invite" method="POST" class="mb-3">
                         <div class="input-group">
                             <input type="email" class="form-control" name="email" placeholder="Email du membre" required style="background-color: #f8f9fa; color: black">
-                            <button type="submit" class="btn btn-primary">Inviter</button>
+                            <button type="submit" class="btn btn-primary" style="margin: 0;">Inviter</button>
                         </div>
                     </form>
                 <?php endif; ?>
@@ -120,15 +125,12 @@
                         <?php foreach ($members as $member): ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <?= htmlspecialchars($member['name']) ?>
-                                <?php if ($member['status'] === 'pending'): ?>
-                                    <span class="badge bg-warning">En attente</span>
-                                <?php endif; ?>
-                                <?php if ($canEdit && $member['status'] === 'accepted'): ?>
+                                <?php if ($canEdit): ?>
                                     <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/members/<?= $member['id'] ?>/remove"
                                         method="POST" class="d-inline">
-                                        <button type="submit" class="btn btn-danger btn-sm"
+                                        <button type="submit" class="btn btn-danger btn-sm icone" style="padding: 0.5rem 1rem;"
                                             onclick="return confirm('Retirer ce membre du projet ?')">
-                                            Retirer
+                                            <i class="fas fa-user-minus"></i>
                                         </button>
                                     </form>
                                 <?php endif; ?>

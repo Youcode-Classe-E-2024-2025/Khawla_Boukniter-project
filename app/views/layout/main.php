@@ -57,21 +57,18 @@
                                         Tableau de Bord
                                     </a>
                                 </li>
-                                <?php if (is_manager()): ?>
                                     <li class="nav-item">
                                         <a class="dropdown-item" href="<?= base_url('projects') ?>">
                                             <i class="bi bi-folder me-1"></i>
                                             Mes Projets
                                         </a>
                                     </li>
-                                <?php else: ?>
                                     <li class="nav-item">
                                         <a class="dropdown-item" href="<?= base_url('tasks') ?>">
                                             <i class="bi bi-list-check me-1"></i>
                                             Mes Tâches
                                         </a>
                                     </li>
-                                <?php endif; ?>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

@@ -99,7 +99,7 @@ class Project {
                 FROM projects p 
                 JOIN users u ON p.manager_id = u.id 
                 JOIN project_members pm ON p.id = pm.project_id 
-                WHERE pm.user_id = :member_id AND pm.status = 'accepted' 
+                WHERE pm.user_id = :member_id 
                 ORDER BY p.created_at DESC";
         
         $stmt = $this->db->prepare($sql);
@@ -153,7 +153,7 @@ class Project {
     }
 
     public function getMembers(int $projectId): array {
-        $sql = "SELECT u.*, pm.status 
+        $sql = "SELECT u.* 
                 FROM users u 
                 JOIN project_members pm ON u.id = pm.user_id 
                 WHERE pm.project_id = :project_id";
