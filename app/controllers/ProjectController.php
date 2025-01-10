@@ -107,11 +107,15 @@ class ProjectController extends Controller
 
         $tasks = $this->taskModel->getByProject($id);
 
+        $allPermissions = $this->userModel->getAllPermissions(); // Récupérer toutes les permissions
+        error_log('All Permissions: ' . print_r($allPermissions, true)); // Log pour vérifier toutes les permissions
+
         $this->render('projects/show', [
             'project' => $project,
             'members' => $members,
             'canEdit' => $canEdit,
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'allPermissions' => $allPermissions // Passer toutes les permissions à la vue
         ]);
     }
 

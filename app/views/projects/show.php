@@ -119,9 +119,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="permissions" class="form-label">Permissions :</label>
+                                <?php 
+                                    error_log('Permissions: ' . print_r($allPermissions, true));
+                                ?>
                                 <select name="permissions[]" id="permissions" class="form-select">
-                                    <?php if (!empty($permissions)): ?>
-                                        <?php foreach ($permissions as $permission): ?>
+                                    <?php if (!empty($allPermissions)): ?>
+                                        <?php foreach ($allPermissions as $permission): ?>
                                             <option value="<?= $permission['id'] ?>"><?= htmlspecialchars($permission['name']) ?></option>
                                         <?php endforeach; ?>
                                     <?php else: ?>
