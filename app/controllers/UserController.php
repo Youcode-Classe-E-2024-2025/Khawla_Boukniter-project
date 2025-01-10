@@ -17,9 +17,6 @@ class UserController extends Controller {
         $this->render("users/index", ["users" => $users]);
     }
 
-    // public function create() {
-    // }
-
     public function store() {
         $data = $_POST;
         $this->userModel->create($data);
@@ -27,8 +24,12 @@ class UserController extends Controller {
     }
 
     public function edit($id) {
-        $user = $this->userModel->findById($id); // Retrieve the user by ID
+        error_log("Editing user with ID: " . $id);
+        error_log("Calling findById with ID: " . $id);
+        $user = $this->userModel->findById($id);
+        
         if (!$user) {
+            error_log("User not found for ID: " . $id);
             echo "User not found.";
             exit;
         }
@@ -39,7 +40,8 @@ class UserController extends Controller {
     public function update($id) {
         $data = $_POST;
         $this->userModel->update($id, $data);
-        // Redirigez vers la liste des utilisateurs
+        $this->redirect('users'); 
+        exit;
     }
 
     public function delete($id) {
@@ -48,4 +50,3 @@ class UserController extends Controller {
         exit;
     }
 }
-

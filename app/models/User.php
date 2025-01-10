@@ -53,11 +53,17 @@ class User {
     }
 
     public function findById(int $id): ?array {
+        error_log("Searching for user with ID: " . $id);
         $sql = "SELECT * FROM users WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
         
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            error_log("User found: " . print_r($user, true));
+        } else {
+            error_log("No user found for ID: " . $id);
+        }
         return $user ?: null;
     }
 
@@ -72,13 +78,12 @@ class User {
     }
 
     public function update(int $id, array $data): bool {
-        $sql = "UPDATE users SET name = :name, email = :email, password = :password WHERE id = :id";
+        $sql = "UPDATE users SET name = :name, email = :email WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         
         return $stmt->execute([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'id' => $id
         ]);
     }

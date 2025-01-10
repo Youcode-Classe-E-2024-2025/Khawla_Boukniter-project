@@ -5,34 +5,32 @@ use App\Models\User;
 
 // use App\Models;
 
-if (isset($_GET['id'])) {
-    $userId = $_GET['id'];
-    $userModel = new User();
-    $user = $userModel->findById($userId);
+// if (isset($_GET['id'])) {
+//     $userId = $_GET['id'];
+//     $userModel = new User();
+//     $user = $userModel->findById($userId);
 
-    if (!$user) {
-        echo "User not found.";
-        exit;
-    }
-} else {
-    echo "No user ID provided.";
-    exit;
-}
+//     if (!$user) {
+//         echo "User not found.";
+//         exit;
+//     }
+// } else {
+//     echo "No user ID provided.";
+//     exit;
+// }
 
-// Handle form submission for updating user
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = [
-        'name' => $_POST['name'],
-        'email' => $_POST['email'],
-        // Add other fields as necessary
-    ];
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     $data = [
+//         'name' => $_POST['name'],
+//         'email' => $_POST['email'],
+//     ];
     
-    // Update user in the database
-    $userModel->update($userId, $data); // Assuming you have an update method
-    header('Location: index.php'); // Redirect back to the user list
-    exit;
-}
-?>
+//     // Update user in the database
+//     $userModel->update($userId, $data); // Assuming you have an update method
+//     header('Location: index.php'); // Redirect back to the user list
+//     exit;
+// }
+// ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container mt-5">
         <h1>Edit User</h1>
-        <form method="POST">
+        <form action="" <?= base_url('users/' . $user['id'] . '/update') ?> method="POST">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>

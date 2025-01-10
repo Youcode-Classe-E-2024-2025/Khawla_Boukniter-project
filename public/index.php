@@ -77,7 +77,7 @@ $router->addRoute('GET', '/users', [UserController::class, 'index']);
 $router->addRoute('GET', '/users/create', [UserController::class, 'create']);
 $router->addRoute('POST', '/users/store', [UserController::class, 'store']);
 $router->addRoute('GET', '/users/{id}/edit', [UserController::class, 'edit']);
-$router->addRoute('POST', '/users/{id}/update', [UserController::class, 'update']);
+$router->addRoute('POST', '/users/{id}/edit', [UserController::class, 'update']);
 $router->addRoute('POST', '/users/{id}/delete', [UserController::class, 'delete']);
 
 // Dispatch de la requête
