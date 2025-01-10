@@ -101,8 +101,6 @@
                     }
                 </script>
             </div>
-
-            <!-- Section des tâches sera ajoutée ici  -->
         </div>
 
         <div class="col-md-4">
@@ -142,16 +140,23 @@
                         <ul class="list-group">
                             <?php foreach ($members as $member): ?>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <?= htmlspecialchars($member['name']) ?>
-                                    <?php if ($canEdit): ?>
-                                        <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/members/<?= $member['id'] ?>/remove"
-                                            method="POST" class="d-inline">
-                                            <button type="submit" class="btn btn-danger btn-sm icone" style="padding: 0.5rem 1rem;"
-                                                onclick="return confirm('Retirer ce membre du projet ?')">
-                                                <i class="fas fa-user-minus"></i>
-                                            </button>
-                                        </form>
+                                <h5><?= htmlspecialchars($member['name']) ?></h5>
+                                <div class="permissions">
+                                    <?php if (isset($member['permission_name'])): ?>
+                                        <span class="badge bg-primary"><?= htmlspecialchars($member['permission_name']) ?></span>
+                                    <?php else: ?>
+                                        <span class="badge bg-secondary">Aucune permission</span>
                                     <?php endif; ?>
+                                </div>
+                                <?php if ($canEdit): ?>
+                                    <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/members/<?= $member['id'] ?>/remove"
+                                        method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm icone" style="padding: 0; background-color: transparent; color: darkred;"
+                                            onclick="return confirm('Retirer ce membre du projet ?')">
+                                            <i class="fas fa-user-minus"></i>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
