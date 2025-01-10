@@ -64,4 +64,41 @@ class UserController extends Controller {
         $this->redirect("users");
         exit;
     }
+
+    public function assignPermission($id, $permission) {
+        $user =$this->userModel->findById($id);
+
+        if (!$user) {
+            return;
+        }
+        $this->userModel->addPermission($id, $permission);
+    }
+    
+
+    public function removePermission($id, $permission) {
+        $user = $this->userModel->findById($id);
+
+        if (!$user) {
+            return;
+        }
+        $this->userModel->removePermission($id, $permission);
+    }
+
+    public function getPermission($id) {
+        $user = $this->userModel->findById($id);
+
+        if (!$user) {
+            return;
+        }
+        return $this->userModel->getPermissions($id);
+    }
+
+    public function checkPermission($id, $permission) {
+        $user = $this->userModel->findById($id);
+
+        if (!$user) {
+            return false;
+        }
+        return $this->userModel->hasPermission($id, $permission);
+    }
 }

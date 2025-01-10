@@ -77,37 +77,6 @@ class TaskController extends Controller
         ]);
     }
 
-    // public function create() {
-    //     if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
-    //         $_SESSION['error'] = "Vous devez être un chef de projet pour créer une tâche.";
-    //         $this->redirect('dashboard');
-    //         return;
-    //     }
-
-    //     if ($this->isPost()) {
-    //         $data = $this->getPostData();
-    //         $data['creator_id'] = $_SESSION['user_id']; // ID du créateur
-    //         $data['project_id'] = $data['project_id']; // ID du projet associé
-
-    //         // Validation des champs requis
-    //         if (empty($data['title']) || empty($data['deadline'])) {
-    //             $_SESSION['error'] = "Le titre et la date limite sont requis.";
-    //             $this->redirect("tasks/create");
-    //             return;
-    //         }
-
-    //         if ($this->taskModel->create($data)) {
-    //             $_SESSION['success'] = "Tâche créée avec succès.";
-    //             $this->redirect("projects/{$data['project_id']}/tasks");
-    //         } else {
-    //             $_SESSION['error'] = "Erreur lors de la création de la tâche.";
-    //             $this->redirect("tasks/create");
-    //         }
-    //     }
-
-    //     $this->render('tasks/create', ['pageTitle' => 'Créer une Tâche']);
-    // }
-
     public function create(int $projectId)
     {
         if (!$this->isAuthenticated() || $_SESSION['user_role'] !== 'manager') {
@@ -136,45 +105,37 @@ class TaskController extends Controller
         }
 
         $data = $this->getPostData();
-        $data['project_id'] = $projectId; // Associe la tâche au projet
+        $data['project_id'] = $projectId;
 
-        // Validation des champs requis
         if (empty($data['title']) || empty($data['deadline'])) {
             $_SESSION['error'] = "Le titre et la date limite sont requis.";
             $this->redirect("projects/$projectId/tasks/create");
             return;
         }
 
-        // Gestion des tags
         $tags = isset($data['tags']) ? json_decode($data['tags'], true) : [];
         $tagIds = [];
 
         foreach ($tags as $tag) {
-            $tagName = trim($tag['value']); // Extraire la valeur du tag
+            $tagName = trim($tag['value']);
             if (!empty($tagName)) {
-                // Vérifiez si le tag existe déjà
                 $existingTag = $this->tagModel->findByName($tagName);
                 if ($existingTag) {
                     $tagIds[] = $existingTag['id'];
                 } else {
-                    // Si le tag n'existe pas, créez-le
                     $tagId = $this->tagModel->create(['name' => $tagName]);
                     $tagIds[] = $tagId;
                 }
             }
         }
 
-        // Créer la tâche
         $taskId = $this->taskModel->create($data);
 
-        // Lier les tags à la tâche
         foreach ($tagIds as $tagId) {
             $this->taskModel->linkTagToTask($taskId, $tagId);
         }
 
-        // Ajout de la logique pour gérer les tags
         $data['tags'] = isset($data['tags']) ? json_decode($data['tags'], true) : [];
-        // Logique pour ajouter la catégorie si elle n'existe pas
         if (!empty($data['category'])) {
             $categoryId = $this->categoryModel->create(['name' => $data['category']]);
             $data['category_id'] = $categoryId;

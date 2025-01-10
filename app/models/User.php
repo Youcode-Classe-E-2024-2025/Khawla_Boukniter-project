@@ -93,4 +93,33 @@ class User {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute(['id' => $id]);
     }
+
+    public function addPermission($userId, $permissionId) {
+        $stmt = $this->db->prepare("INSERT INTO user_permissions (user_id, permission_id) VALUES (?, ?)");
+        $stmt->execute([$userId, $permissionId]);
+    }
+
+    public function removePermission($userId, $permissionId) {
+        $stmt = $this->db->prepare("DELETE FROM user_permissions WHERE user_id = ? AND permission_id = ?");
+        $stmt->execute([$userId, $permissionId]);
+    }
+
+    public function getPermissions($userId) {
+        $stmt = $this->db->prepare("SELECT p.* FROM permissions p JOIN user_permissions up ON p.id = up.permission_id WHERE up.user_id = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll();
+    }
+
+    public function hasPermission($userId, $permission) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM user_permissions up JOIN permissions p ON up.permission_id = p.id WHERE up.user_id = ? AND p.name = ?");
+        $stmt->execute([$userId, $permission]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function getAllPermissions() {
+        $stmt = $this->db->query("SELECT * FROM permissions");
+        $permissions = $stmt->fetchAll();
+        error_log('Permissions récupérées: ' . print_r($permissions, true)); // Ajoutez cette ligne
+        return $permissions;
+    }
 }

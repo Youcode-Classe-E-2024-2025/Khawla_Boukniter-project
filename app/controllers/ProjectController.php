@@ -193,23 +193,44 @@ class ProjectController extends Controller
             return;
         }
 
+        $permissions = $this->userModel->getAllPermissions();
+        error_log('Permissions avant rendu: ' . print_r($permissions, true));
+
+        var_dump($permissions); // Pour déboguer
+        if (empty($permissions)) {
+            error_log('Aucune permission trouvée.');
+        } else {
+            error_log('Permissions récupérées: ' . print_r($permissions, true));
+        }
+
         if ($this->isPost()) {
             $data = $this->getPostData();
             $email = $data['email'] ?? '';
+            $permissions = $data['permissions'] ?? [];
+            error_log('Permissions avant rendu: ' . print_r($permissions, true));
             $user = $this->userModel->findByEmail($email);
 
             if ($user) {
                 $userId = (int)$user['id'];
                 $this->projectModel->addMember($projectId, userId: $userId);
+
+                foreach ($permissions as $permissionId) {
+                    $this->userModel->addPermission($userId, $permissionId);
+                }
+
                 $_SESSION['success'] = "Invitation envoyée à $email.";
             } else {
                 $_SESSION['error'] = "L'email fourni n'est pas associé à un compte.";
             }
-
             $this->redirect("projects/$projectId");
         }
-
-        $this->render('projects/invite', ['projectId' => $projectId, 'pageTitle' => 'Inviter un Membre']);
+        error_log('Permissions avant rendu: ' . print_r($permissions, true));
+        if (empty($permissions)) {
+            error_log('Aucune permission trouvée.');
+        } else {
+            error_log('Permissions récupérées: ' . print_r($permissions, true));
+        }
+        $this->render('projects/invite', ['projectId' => $projectId, 'permissions' => $permissions, 'pageTitle' => 'Inviter un Membre']);
     }
 
     public function removeMember(int $id, int $userId)
