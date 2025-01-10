@@ -1,6 +1,7 @@
-# Système de Gestion de Projets
+# Khawla Boukniter Project
 
-Application de gestion de projets développée en PHP 8 avec architecture MVC.
+## Description
+Ce projet est une application de gestion de tâches qui permet aux utilisateurs de créer, gérer et assigner des tâches au sein de projets.
 
 ## Structure du Projet
 ```
@@ -23,13 +24,11 @@ Application de gestion de projets développée en PHP 8 avec architecture MVC.
 - MySQL 5.7 ou supérieur
 - Composer
 
-## Installation
-1. Cloner le repository
-2. Exécuter `composer install`
-3. Configurer la base de données dans `app/config/database.php`
-4. Importer la structure de la base de données
-
 ## Fonctionnalités
+- **Création et gestion de projets** : Les utilisateurs peuvent créer de nouveaux projets et gérer les tâches associées.
+- **Assignation de tâches** : Les chefs de projet peuvent assigner des tâches à des membres spécifiques. Si un utilisateur qui n'est pas le chef de projet ou le créateur du projet tente d'accéder à un projet, il sera redirigé vers une page 404.
+- **Affichage des tâches** : Les tâches sont affichées selon leur statut (À faire, En cours, Terminé) et l'utilisateur assigné.
+- **Permissions** : Les permissions des membres sont affichées sous forme de badges sur la page des projets.
 ### Utilisateur Non Connecté
 - Voir les projets publics
 - S'inscrire/Se connecter
@@ -45,3 +44,20 @@ Application de gestion de projets développée en PHP 8 avec architecture MVC.
 - Rejoindre des projets
 - Gérer ses tâches assignées
 - Voir son tableau de bord
+
+## Installation
+1. Clonez le dépôt :
+   ```bash
+   git clone https://github.com/votre-utilisateur/votre-repo.git
+   ```
+2. Installez les dépendances :
+   ```bash
+   composer install
+   ```
+3. Configurez votre base de données dans le fichier `.env`.
+
+## Utilisation
+- Pour démarrer le serveur, utilisez la commande suivante :
+   ```bash
+   php -S localhost:8000 -t public
+   ```
