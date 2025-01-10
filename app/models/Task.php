@@ -99,15 +99,13 @@ class Task
 
     public function getByProject(int $projectId): array
     {
-        $sql = "SELECT t.*, c.name as category_name, u.name as assigned_to_name 
+        $sql = "SELECT t.*, u.name AS assigned_user 
                 FROM tasks t 
-                LEFT JOIN categories c ON t.category_id = c.id 
                 LEFT JOIN users u ON t.assigned_to = u.id 
-                WHERE t.project_id = :project_id 
-                ORDER BY t.deadline ASC";
+                WHERE t.project_id = :projectId";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['project_id' => $projectId]);
+        $stmt->execute(['projectId' => $projectId]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -151,6 +149,12 @@ class Task
         $stmt = $this->db->prepare($query);
         $stmt->execute($projectIds);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function assignTo(int $taskId, int $userId) {
+        $sql = "UPDATE tasks SET assigned_to = :userId WHERE id = :taskId";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute(['userId' => $userId, 'taskId' => $taskId]);
     }
 
     public function getByAssignee($userId)

@@ -50,6 +50,7 @@ $router->addRoute('POST', '/projects/{id}/invite', [ProjectController::class, 'i
 $router->addRoute('POST', '/projects/{id}/delete', [ProjectController::class, 'delete']);
 $router->addRoute('POST', '/projects/{id}/members', [ProjectController::class, 'addMember']);
 $router->addRoute('POST', '/projects/{id}/members/{userId}/remove', [ProjectController::class, 'removeMember']);
+$router->addRoute('GET', '/projects/{id}/tasks', [ProjectController::class, 'showTasks']);
 
 // Routes pour les tâches
 $router->addRoute('GET', '/projects/{id}/tasks', [TaskController::class, 'index']);
@@ -63,6 +64,7 @@ $router->addRoute('POST', '/tasks/{id}/delete', [TaskController::class, 'delete'
 $router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/update_status', [TaskController::class, 'updateStatus']);
 $router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/delete', [TaskController::class, 'delete']);
 $router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/delete', [TaskController::class, 'delete']);
+$router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/assign', [TaskController::class, 'assign']);
 
 // Routes pour les catégories
 $router->addRoute('GET', '/categories', [CategoryController::class, 'index']);

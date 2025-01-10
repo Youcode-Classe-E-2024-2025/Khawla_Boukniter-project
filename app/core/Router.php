@@ -55,6 +55,10 @@ class Router
                     $projectId = (int)$matches[1];
                     $userId = (int)$matches[2];
                     return $controllerInstance->$action($projectId, $userId);
+                } else if (preg_match('/^\/projects\/(\d+)\/tasks\/(\d+)\/assign$/', $uri, $matches)) {
+                    $projectId = (int)$matches[1];
+                    $userId = (int)$matches[2];
+                    return $controllerInstance->$action($projectId, $userId);
                 } else {
                     return $controllerInstance->$action();
                 }

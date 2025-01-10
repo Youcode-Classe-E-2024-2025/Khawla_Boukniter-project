@@ -153,9 +153,11 @@ class Project {
     }
 
     public function getMembers(int $projectId): array {
-        $sql = "SELECT u.* 
+        $sql = "SELECT u.*, p.name AS permission_name 
                 FROM users u 
                 JOIN project_members pm ON u.id = pm.user_id 
+                LEFT JOIN user_permissions up ON u.id = up.user_id 
+                LEFT JOIN permissions p ON up.permission_id = p.id 
                 WHERE pm.project_id = :project_id";
         
         $stmt = $this->db->prepare($sql);

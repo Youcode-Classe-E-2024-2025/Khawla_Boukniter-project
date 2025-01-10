@@ -262,6 +262,9 @@ class ProjectController extends Controller
 
     public function showTasks(int $projectId) {
         $tasks = $this->taskModel->getByProject($projectId);
-        $this->render('projects/tasks', ['tasks' => $tasks]);
+        $members = $this->projectModel->getMembers($projectId);
+        $project = $this->projectModel->findById($projectId);
+        error_log('Membres récupérés: ' . print_r($members, true));
+        $this->render('projects/tasks', ['tasks' => $tasks, 'projectId'=> $projectId, 'members' => $members, 'project' => $project]);
     }
 }

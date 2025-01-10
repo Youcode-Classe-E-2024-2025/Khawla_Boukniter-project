@@ -307,6 +307,16 @@ class TaskController extends Controller
         $this->redirect("tasks/view/$taskId");
     }
 
+    public function assign(int $projectId, int $taskId) {
+        $assignedTo = $_POST['assigned_to'];
+        if ($this->taskModel->assignTo($taskId, $assignedTo)) {
+            $_SESSION['success'] = "Tâche assignée avec succès.";
+        } else {
+            $_SESSION['error'] = "Erreur lors de l'assignation de la tâche.";
+        }
+        $this->redirect('projects/' . $projectId . '/tasks');
+    }
+
     public function viewAssignedTasks()
     {
         if (!$this->isAuthenticated()) {
