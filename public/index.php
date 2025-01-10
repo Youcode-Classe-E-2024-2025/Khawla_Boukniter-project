@@ -53,7 +53,6 @@ $router->addRoute('POST', '/projects/{id}/members/{userId}/remove', [ProjectCont
 
 // Routes pour les tâches
 $router->addRoute('GET', '/projects/{id}/tasks', [TaskController::class, 'index']);
-// $router->addRoute('GET', '/projects/{id}/tasks', [TaskController::class,'showTasks']);
 $router->addRoute('GET', '/projects/{projectId}/tasks/create', [TaskController::class, 'create']);
 $router->addRoute('GET', '/projects/{id}/tasks/create', [TaskController::class, 'create']);
 $router->addRoute('POST', '/projects/{id}/tasks', [TaskController::class, 'store']);
@@ -61,7 +60,6 @@ $router->addRoute('GET', '/tasks/{id}', [TaskController::class, 'show']);
 $router->addRoute('GET', 'projects/{projectId}/tasks/{taskId}/edit', [TaskController::class, 'edit']);
 $router->addRoute('POST', '/tasks/{id}/', [TaskController::class, 'update']);
 $router->addRoute('POST', '/tasks/{id}/delete', [TaskController::class, 'delete']);
-// $router->addRoute('POST', '/tasks/{id}/update_status', [TaskController::class, 'updateStatus']);
 $router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/update_status', [TaskController::class, 'updateStatus']);
 $router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/delete', [TaskController::class, 'delete']);
 $router->addRoute('POST', '/projects/{projectId}/tasks/{taskId}/delete', [TaskController::class, 'delete']);
@@ -78,7 +76,9 @@ $router->addRoute('GET', '/users/create', [UserController::class, 'create']);
 $router->addRoute('POST', '/users/store', [UserController::class, 'store']);
 $router->addRoute('GET', '/users/{id}/edit', [UserController::class, 'edit']);
 $router->addRoute('POST', '/users/{id}/edit', [UserController::class, 'update']);
+$router->addRoute('POST', '/users/{id}/update', [UserController::class, 'update']);
 $router->addRoute('POST', '/users/{id}/delete', [UserController::class, 'delete']);
+$router->addRoute('POST', '/users/{id}/updateRole', [UserController::class, 'updateRole']);
 
 // Dispatch de la requête
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

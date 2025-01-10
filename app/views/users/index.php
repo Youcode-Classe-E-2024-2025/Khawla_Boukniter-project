@@ -1,84 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.1.2/tailwind.min.css"> -->
     <style>
-        body {
-            background-color: #f8f9fa; /* Example background color */
-        }
-        .container {
+         /* body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }  */
+        /* .container {
             margin-top: 50px;
-        }
-        table {
-            width: 100%;
-            margin: 20px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-        }
-        th, td {
-            border: 1px solid #dee2e6; /* Use your site's border color */
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #007bff; /* Example header color */
-            color: white; /* Header text color */
-        }
-        tr:hover {
-            background-color: #e9ecef; /* Hover effect */
-        }
-        .btn {
-            padding: 5px 10px;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-        .btn-primary {
-            background-color: #28a745; /* Example button color */
-        }
-        .btn-danger {
-            background-color: #dc3545; /* Delete button color */
-        }
-        .btn:hover {
-            opacity: 0.8; /* Slightly transparent on hover */
+        }  */
+        .mx-auto {
+            color: black;
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>User List</h1>
-        <?php if (empty($users)): ?>
-            <p>No users found.</p>
-        <?php else: ?>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($user['id']); ?></td>
-                            <td><?php echo htmlspecialchars($user['name']); ?></td>
-                            <td><?php echo htmlspecialchars($user['email']); ?></td>
-                            <td>
-                            <a class="btn btn-primary" href="<?= base_url('users/' . $user['id'] . '/edit') ?>">Edit</a>
-                                <form action="<?= base_url('users/' . $user['id'] . '/delete') ?>" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
+<!-- </head> -->
+<!-- <body class="bg-gray-100"> -->
+    <div class="mx-auto p-4">
+        <h1 class="text-2xl mb-8" style="background: linear-gradient(to right, #fb8192, #4CAF50); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; width: fit-content; justify-self: center;">Users</h1>
+        <div class="flex flex-col" data-aos="fade-up">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr class="bg-gray-50" style="background-color: #dddddd;">
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-[#66656d] uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-[#66656d] uppercase tracking-wider">Name</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-[#66656d] uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-[#66656d] uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200" style="background-color: #e9e9e9;">
+                                <?php foreach ($users as $user): ?>
+                                    <tr data-aos="fade-up">
+                                        <td class="px-6 py-2 whitespace-no-wrap"><?php echo htmlspecialchars($user['id']); ?></td>
+                                        <td class="px-6 py-2 whitespace-no-wrap"><?php echo htmlspecialchars($user['name']); ?></td>
+                                        <td class="px-6 py-2 whitespace-no-wrap"><?php echo htmlspecialchars($user['email']); ?></td>
+                                        <td class="px-6 py-2 whitespace-no-wrap">
+                                            <a class="btn btn-primary py-2" href="<?= base_url('users/' . $user['id'] . '/edit') ?>">Edit</a>
+                                            <form action="<?= base_url('users/' . $user['id'] . '/delete') ?>" method="POST" style="display:inline;">
+                                                <button type="submit" class="btn btn-danger py-2">Delete</button>
+                                            </form>
+                                            <form action="<?= base_url('users/' . $user['id'] . '/updateRole') ?>" method="POST" style="display:inline;">
+                                                <select name="role" onchange="this.form.submit()" class="form-select" style="display:inline; width: auto; background-color: #e9e9e9; border: none;">
+                                                    <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : '' ?>>Admin</option>
+                                                    <option value="member" <?= $user['role'] == 'member' ? 'selected' : '' ?>>Member</option>
+                                                    <option value="manager" <?= $user['role'] == 'manager' ? 'selected' : '' ?>>Manager</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+    <script>AOS.init();</script>
+<!-- </body>
+</html> -->

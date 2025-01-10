@@ -34,7 +34,6 @@ class UserController extends Controller {
             exit;
         }
         $this->render("users/edit", ["user"=> $user]);
-        // require_once __DIR__ . '/../views/users/edit.php'; // Load the edit view
     }
 
     public function update($id) {
@@ -47,6 +46,22 @@ class UserController extends Controller {
     public function delete($id) {
         $this->userModel->delete($id);
         $this->redirect('users'); 
+        exit;
+    }
+
+    public function manageRole($id) {
+        $user = $this->userModel->findById($id);
+        if (!$user) {
+            echo "User not found.";
+            exit;
+        }
+        $this->render("users", ["user" => $user]);
+    }
+
+    public function updateRole($id) {
+        $data = $_POST;
+        $this->userModel->setRole($id, $data["role"]);
+        $this->redirect("users");
         exit;
     }
 }

@@ -13,6 +13,10 @@
     <?php if (isset($isHomePage) && $isHomePage): ?>
         <link href="<?= asset_url('css/home.css') ?>" rel="stylesheet">
     <?php endif; ?>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.1.2/tailwind.min.css">
 </head>
 
 <body>
