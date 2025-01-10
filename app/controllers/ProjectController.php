@@ -11,13 +11,13 @@ class ProjectController extends Controller
 {
     private Project $projectModel;
     private User $userModel;
-    private Task $taskModel; // Ajout de la propriété taskModel
+    private Task $taskModel;
 
     public function __construct()
     {
         $this->projectModel = new Project();
         $this->userModel = new User();
-        $this->taskModel = new Task(); // Initialisation de la propriété taskModel
+        $this->taskModel = new Task();
     }
 
     public function index()
@@ -73,7 +73,6 @@ class ProjectController extends Controller
         $data = $this->getPostData();
         $data['manager_id'] = $_SESSION['user_id'] ?? 0;
 
-        // Validation basique
         if (empty($data['title']) || empty($data['deadline'])) {
             $_SESSION['error'] = "Le titre et la date limite sont requis";
             $this->redirect('/projects/create');
@@ -115,7 +114,7 @@ class ProjectController extends Controller
             'members' => $members,
             'canEdit' => $canEdit,
             'tasks' => $tasks,
-            'allPermissions' => $allPermissions // Passer toutes les permissions à la vue
+            'allPermissions' => $allPermissions
         ]);
     }
 
@@ -200,7 +199,7 @@ class ProjectController extends Controller
         $permissions = $this->userModel->getAllPermissions();
         error_log('Permissions avant rendu: ' . print_r($permissions, true));
 
-        var_dump($permissions); // Pour déboguer
+        var_dump($permissions);
         if (empty($permissions)) {
             error_log('Aucune permission trouvée.');
         } else {

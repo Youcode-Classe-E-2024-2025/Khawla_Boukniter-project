@@ -149,8 +149,7 @@
                                     <?php endif; ?>
                                 </div>
                                 <?php if ($canEdit): ?>
-                                    <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/members/<?= $member['id'] ?>/remove"
-                                        method="POST" class="d-inline">
+                                    <form action="<?= base_url('projects/') ?><?= $project['id'] ?>/members/<?= $member['id'] ?>/remove" method="POST" class="d-inline">
                                         <button type="submit" class="btn btn-danger btn-sm icone" style="padding: 0; background-color: transparent; color: darkred;"
                                             onclick="return confirm('Retirer ce membre du projet ?')">
                                             <i class="fas fa-user-minus"></i>
