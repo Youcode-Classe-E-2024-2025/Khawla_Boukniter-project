@@ -42,6 +42,9 @@ class AuthController extends Controller
                 } else if ($user['role'] === 'member' || $user['role'] === 'manager') {
                     $this->redirect('dashboard');
                 }
+                else if ($user['role'] === 'admin') {
+                    $this->redirect('users');
+                }
             } else {
                 $_SESSION['error'] = "Email ou mot de passe incorrect";
                 $this->redirect('login');

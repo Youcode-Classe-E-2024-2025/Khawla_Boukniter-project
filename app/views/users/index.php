@@ -1,26 +1,8 @@
-<!-- <!DOCTYPE html> -->
-<!-- <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User List</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.1.2/tailwind.min.css"> -->
     <style>
-         /* body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-        }  */
-        /* .container {
-            margin-top: 50px;
-        }  */
         .mx-auto {
             color: black;
         }
     </style>
-<!-- </head> -->
-<!-- <body class="bg-gray-100"> -->
     <div class="mx-auto p-4">
         <h1 class="text-2xl mb-8" style="background: linear-gradient(to right, #fb8192, #4CAF50); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; width: fit-content; justify-self: center;">Users</h1>
         <div class="flex flex-col" data-aos="fade-up">
@@ -66,5 +48,3 @@
         </div>
     </div>
     <script>AOS.init();</script>
-<!-- </body>
-</html> -->

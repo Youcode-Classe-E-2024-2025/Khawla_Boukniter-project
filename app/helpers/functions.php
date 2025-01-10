@@ -41,6 +41,11 @@ function is_member()
     return user_role() === 'member';
 }
 
+function is_admin()
+{
+    return user_role() === 'admin';
+}
+
 function format_date($date)
 {
     if (empty($date)) return 'Non définie';

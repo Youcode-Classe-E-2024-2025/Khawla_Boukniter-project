@@ -61,18 +61,22 @@
                                         Tableau de Bord
                                     </a>
                                 </li>
+                                <?php if (!is_admin()): ?>
                                     <li class="nav-item">
                                         <a class="dropdown-item" href="<?= base_url('projects') ?>">
                                             <i class="bi bi-folder me-1"></i>
                                             Mes Projets
                                         </a>
                                     </li>
-                                    <!-- <li class="nav-item">
-                                        <a class="dropdown-item" href="<?= base_url('tasks') ?>">
-                                            <i class="bi bi-list-check me-1"></i>
-                                            Mes Tâches
+                                <?php endif; ?>
+                                <?php if (is_admin()): ?>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" href="<?= base_url('users') ?>">
+                                            <i class="bi bi-people me-1"></i>
+                                            Gestion des Utilisateurs
                                         </a>
-                                    </li> -->
+                                    </li>
+                                <?php endif; ?>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
