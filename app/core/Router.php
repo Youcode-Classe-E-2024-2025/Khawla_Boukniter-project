@@ -47,6 +47,10 @@ class Router
                 } else if (preg_match('/^\/projects\/(\d+)\/tasks\/create$/', $uri, $matches)) {
                     $projectId = (int)$matches[1];
                     return $controllerInstance->$action($projectId);
+                } else if (preg_match('/^\/projects\/(\d+)\/tasks\/(\d+)$/', $uri, $matches)) {
+                    $projectId = (int)$matches[1];
+                    $taskId = (int)$matches[2];
+                    return $controllerInstance->$action($projectId, $taskId);
                 } else {
                     return $controllerInstance->$action();
                 }

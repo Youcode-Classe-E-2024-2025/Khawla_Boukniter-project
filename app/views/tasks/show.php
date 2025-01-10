@@ -50,8 +50,10 @@
     </style>
     <div class="container py-4">
         <h1 class="h3">Tâches Assignées</h1>
-        <div class="mb-3">
-            <a href="<?= base_url('projects/' . $project['id'] . '/tasks/create') ?>" class="btn btn-primary">Ajouter une Tâche</a>
+        <div class="mb-3"></div>
+            <?php if (is_manager()): ?>
+                <a href="<?= base_url('projects/' . $project['id'] . '/tasks/create') ?>" class="btn btn-primary">Ajouter une Tâche</a>
+            <?php endif; ?>
         </div>
         <div class="kanban">
             <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'todo')">
@@ -98,17 +100,19 @@
                             </div>
                             <div class="task-footer">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
-                                        <button type="submit" class="btn btn-danger btn-sm icone" title="Supprimer" style="padding: 0.5rem 1rem;">
-                                            <i class="fas fa-trash"></i>
+                                    <?php if (is_manager()): ?>
+                                        <a href="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?= $task['id'] ?>" style="padding: 0.5rem 1rem;">
+                                            <i class="bi bi-person-plus"></i>
                                         </button>
-                                    </form>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?= $task['id'] ?>" style="padding: 0.5rem 1rem;">
-                                        <i class="bi bi-person-plus"></i>
-                                    </button>
+                                        <form action="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm icone" title="Supprimer" style="padding: 0.5rem 1rem;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -159,17 +163,19 @@
                             </div>
                             <div class="task-footer">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
-                                        <button type="submit" class="btn btn-danger btn-sm icone" title="Supprimer" style="padding: 0.5rem 1rem;">
-                                            <i class="fas fa-trash"></i>
+                                    <?php if (is_manager()): ?>
+                                        <a href="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?= $task['id'] ?>" style="padding: 0.5rem 1rem;">
+                                            <i class="bi bi-person-plus"></i>
                                         </button>
-                                    </form>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?= $task['id'] ?>" style="padding: 0.5rem 1rem;">
-                                        <i class="bi bi-person-plus"></i>
-                                    </button>
+                                        <form action="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm icone" title="Supprimer" style="padding: 0.5rem 1rem;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -220,17 +226,19 @@
                             </div>
                             <div class="task-footer">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
-                                        <button type="submit" class="btn btn-danger btn-sm icone" title="Supprimer" style="padding: 0.5rem 1rem;">
-                                            <i class="fas fa-trash"></i>
+                                    <?php if (is_manager()): ?>
+                                        <a href="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/edit') ?>" class="btn btn-warning btn-sm icone" title="Modifier" style="padding: 0.5rem 1rem;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?= $task['id'] ?>" style="padding: 0.5rem 1rem;">
+                                            <i class="bi bi-person-plus"></i>
                                         </button>
-                                    </form>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?= $task['id'] ?>" style="padding: 0.5rem 1rem;">
-                                        <i class="bi bi-person-plus"></i>
-                                    </button>
+                                        <form action="<?= base_url('projects/' . $project['id'] . '/tasks/' . $task['id'] . '/delete') ?>" method="POST" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm icone" title="Supprimer" style="padding: 0.5rem 1rem;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

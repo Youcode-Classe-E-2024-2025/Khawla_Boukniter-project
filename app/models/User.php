@@ -61,7 +61,31 @@ class User {
         return $user ?: null;
     }
 
+    public function findAll(): array {
+        $sql = "SELECT * FROM users";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function verifyPassword(string $password, string $hash): bool {
         return password_verify($password, $hash);
+    }
+
+    public function update(int $id, array $data): bool {
+        $sql = "UPDATE users SET name = :name, email = :email, password = :password WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        
+        return $stmt->execute([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+            'id' => $id
+        ]);
+    }
+
+    public function delete(int $id): bool {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute(['id' => $id]);
     }
 }

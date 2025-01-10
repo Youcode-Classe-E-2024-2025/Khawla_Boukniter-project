@@ -53,8 +53,6 @@ function get_status_color($status)
         'todo' => 'warning',
         'doing' => 'info',
         'done' => 'success',
-        'active' => 'primary',
-        'archived' => 'secondary',
         default => 'light'
     };
 }
@@ -65,29 +63,7 @@ function get_status_label($status)
         'todo' => 'À faire',
         'doing' => 'En cours',
         'done' => 'Terminé',
-        'active' => 'Actif',
-        'archived' => 'Archivé',
         default => 'Inconnu'
-    };
-}
-
-function get_priority_color($priority)
-{
-    return match ($priority) {
-        'low' => 'success',
-        'medium' => 'warning',
-        'high' => 'danger',
-        default => 'secondary'
-    };
-}
-
-function get_priority_label($priority)
-{
-    return match ($priority) {
-        'low' => 'Basse',
-        'medium' => 'Moyenne',
-        'high' => 'Haute',
-        default => 'Non définie'
     };
 }
 

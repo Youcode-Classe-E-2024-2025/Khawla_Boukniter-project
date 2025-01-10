@@ -19,6 +19,7 @@ use App\Controllers\ProjectController;
 use App\Controllers\TaskController;
 use App\Controllers\CategoryController;
 use App\Controllers\DashboardController;
+use App\Controllers\UserController;
 
 $router = new Router();
 
@@ -70,6 +71,14 @@ $router->addRoute('GET', '/categories', [CategoryController::class, 'index']);
 $router->addRoute('POST', '/categories', [CategoryController::class, 'store']);
 $router->addRoute('POST', '/categories/{id}', [CategoryController::class, 'update']);
 $router->addRoute('POST', '/categories/{id}/delete', [CategoryController::class, 'delete']);
+
+// Routes pour la gestion des utilisateurs
+$router->addRoute('GET', '/users', [UserController::class, 'index']);
+$router->addRoute('GET', '/users/create', [UserController::class, 'create']);
+$router->addRoute('POST', '/users/store', [UserController::class, 'store']);
+$router->addRoute('GET', '/users/{id}/edit', [UserController::class, 'edit']);
+$router->addRoute('POST', '/users/{id}/update', [UserController::class, 'update']);
+$router->addRoute('POST', '/users/{id}/delete', [UserController::class, 'delete']);
 
 // Dispatch de la requête
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
